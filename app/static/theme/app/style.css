@@ -16,10 +16,11 @@ body {
     bottom: 2px;
 }
 
-.x-toolbar-ct {
-    height: 100%;
+.search {
+    background-color: #DDDDDD;
 }
 
-.x-toolbar div.search {
-    font-size: 22px;
+.legend {
+    background-color: #EEEEEE;
+    padding: 15px 0 0 12px;
 }

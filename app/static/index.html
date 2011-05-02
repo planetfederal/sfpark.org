@@ -57,7 +57,34 @@
                         align : 'stretch',
                         pack  : 'start'
                      },
-                     items: [{width: 40, border: false}, {layout: 'vbox', border: false, items: [{id: 'tbar', border: false, height: 35, width: 900, border: false}, "map"]}]
+                     items: [
+                         {
+                             width: 50,
+                             bodyCfg: {
+                                 tag: "div",
+                                 cls: "legend",
+                                 html: "<img src='http://sfpark.org/wp-content/uploads/icons/availabilitylegend.png'>"
+                             }, 
+                             border: false
+                         }, {
+                             layout: 'vbox', 
+                             border: false, 
+                             items: [
+                                 {
+                                     id: "tbar",
+                                     bodyCfg: {
+                                         tag: "div",
+                                         cls: "search"
+                                     },
+                                     border: false, 
+                                     height: 35, 
+                                     width: 900, 
+                                     border: false
+                                 }, 
+                                 "map"
+                             ]
+                         }
+                     ]
                 }],
                 mapItems: [{
                     xtype: "gx_zoomslider",
@@ -132,5 +159,5 @@
         </script>
 
     </head>
-    <body><div id="portal" style="width:940px;height:400px"></div></body>
+    <body><div id="portal"></div></body>
 </html>
