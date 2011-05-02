@@ -17,10 +17,15 @@ body {
 }
 
 .search {
+    padding-top: 5px;
     background-color: #DDDDDD;
 }
 
 .legend {
     background-color: #EEEEEE;
     padding: 15px 0 0 12px;
+}
+
+.findHeader {
+    padding: 5px 5px 5px 5px;
 }

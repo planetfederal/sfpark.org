@@ -56,105 +56,115 @@
                     layoutConfig: {
                         align : 'stretch',
                         pack  : 'start'
-                     },
-                     items: [
-                         {
-                             width: 50,
-                             bodyCfg: {
-                                 tag: "div",
-                                 cls: "legend",
-                                 html: "<img src='http://sfpark.org/wp-content/uploads/icons/availabilitylegend.png'>"
-                             }, 
-                             border: false
-                         }, {
-                             layout: 'vbox', 
-                             border: false, 
-                             items: [
-                                 {
-                                     id: "tbar",
-                                     bodyCfg: {
-                                         tag: "div",
-                                         cls: "search"
-                                     },
-                                     border: false, 
-                                     height: 35, 
-                                     width: 900, 
-                                     border: false
-                                 }, 
-                                 "map"
-                             ]
-                         }
-                     ]
-                }],
-                mapItems: [{
-                    xtype: "gx_zoomslider",
-                    vertical: true,
-                    height: 100
-                }],
-                sources: {
-                    local: {
-                        ptype: "gxp_wmssource",
-                        url: "/geoserver/ows",
-                        title: "Local GeoServer",
-                        version: "1.1.1"
                     },
-                    google: {
-                        ptype: "gxp_googlesource"
-                    }
-                },
-                tools: [
-                    {
-                        ptype: "gxp_googlegeocoder",
-                        outputTarget: "tbar",
-                        outputConfig: {
-                            hideTrigger: true, 
-                            width: 250,
-                            emptyText: "Type an address, zip code, or intersection",
-                            listEmptyText: "- no matches -"
+                    items: [
+                        {
+                            width: 50,
+                            bodyCfg: {
+                                tag: "div",
+                                cls: "legend",
+                                html: "<img src='http://sfpark.org/wp-content/uploads/icons/availabilitylegend.png'>"
+                            }, 
+                            border: false
+                        }, {
+                            layout: 'vbox', 
+                            border: false, 
+                            items: [
+                                {
+                                    layout: "hbox",
+                                    layoutConfig: {
+                                        align : 'stretch',
+                                        pack  : 'start'
+                                    },
+                                    defaults: {cls: 'search', border: false},
+                                    items: [
+                                        {
+                                            width: 125,
+                                            bodyCfg: {tag: 'div', cls: 'findHeader', html: 'Find parking: '}
+                                        }, {
+                                            flex: 1,
+                                            bodyCfg: {tag: 'div'},
+                                            id: "tbar"
+                                        }
+                                    ],
+                                    height: 35, 
+                                    width: 900, 
+                                    border: false
+                                }, 
+                                "map"
+                            ]
                         }
-                    }
-                ],
-                map: {
-                    id: "map", flex: 1, width: 900,
-                    border: false,
-                    projection: "EPSG:900913",
-                    units: "m",
-                    numZoomLevels: 21,
-                    maxResolution: 156543.03390625,
-                    maxExtent: [
-                        -20037508.34, -20037508.34,
-                        20037508.34, 20037508.34
-                    ],
-                    extent: [-13650159, 4534735, -13609227, 4554724],
-                    layers: [{
-                        source: "google",
-                        title: "Road Map",
-                        name: "ROADMAP",
-                        group: "background",
-                        visibility: true
-                    }, {
-                        source: "google",
-                        title: "Hybrid Map",
-                        name: "HYBRID",
-                        group: "background",
-                        visibility: false
-                    }, {
-                        source: "google",
-                        title: "Satellite Map",
-                        name: "SATELLITE",
-                        group: "background",
-                        visibility: false
-                    }, {
-                        source: "google",
-                        title: "Terrain Map",
-                        name: "TERRAIN",
-                        group: "background",
-                        visibility: false
-                    }],
-                    center: [-13629218, 4545403],
-                    zoom: 13
-                }
-            });
+                    ]
+               }],
+               mapItems: [{
+                   xtype: "gx_zoomslider",
+                   vertical: true,
+                   height: 100
+               }],
+               sources: {
+                   local: {
+                       ptype: "gxp_wmssource",
+                       url: "/geoserver/ows",
+                       title: "Local GeoServer",
+                       version: "1.1.1"
+                   },
+                   google: {
+                       ptype: "gxp_googlesource"
+                   }
+               },
+               tools: [
+                   {
+                       ptype: "gxp_googlegeocoder",
+                       outputTarget: "tbar",
+                       outputConfig: {
+                           hideTrigger: true, 
+                           width: 250,
+                           emptyText: "Type an address, zip code, or intersection",
+                           listEmptyText: "- no matches -"
+                       }
+                   }
+               ],
+               map: {
+                   id: "map", flex: 1, width: 900,
+                   border: false,
+                   projection: "EPSG:900913",
+                   units: "m",
+                   numZoomLevels: 21,
+                   maxResolution: 156543.03390625,
+                   maxExtent: [
+                       -20037508.34, -20037508.34,
+                       20037508.34, 20037508.34
+                   ],
+                   extent: [-13650159, 4534735, -13609227, 4554724],
+                   layers: [{
+                       source: "google",
+                       title: "Road Map",
+                       name: "ROADMAP",
+                       group: "background",
+                       visibility: true
+                   }, {
+                       source: "google",
+                       title: "Hybrid Map",
+                       name: "HYBRID",
+                       group: "background",
+                       visibility: false
+                   }, {
+                       source: "google",
+                       title: "Satellite Map",
+                       name: "SATELLITE",
+                       group: "background",
+                       visibility: false
+                   }, {
+                       source: "google",
+                       title: "Terrain Map",
+                       name: "TERRAIN",
+                       group: "background",
+                       visibility: false
+                   }],
+                   center: [-13629218, 4545403],
+                   zoom: 13
+               }
+           });
 
         </script>
 
