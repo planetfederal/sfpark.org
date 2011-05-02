@@ -48,7 +48,7 @@
             OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
             var app = new gxp.Viewer({
-                portalItems:  [{border: false, region: "center", width: 940, height: 400,items:["map"]}],
+                portalItems:  [{border: false, region: "center", width: 940, height: 400, items: ["map"]}],
                 mapItems: [{
                     xtype: "gx_zoomslider",
                     vertical: true,
@@ -65,9 +65,33 @@
                         ptype: "gxp_googlesource"
                     }
                 },
-
+                tools: [
+                    {
+                        ptype: "gxp_googlegeocoder",
+                        outputTarget: "toolbar",
+                        outputConfig: {
+                            hideTrigger: true, 
+                            width: 250,
+                            emptyText: "Type an address, zip code, or intersection",
+                            listEmptyText: "- no matches -"
+                        }
+                    }
+                ],
                 map: {
-                    id: "map", 
+                    id: "map",
+                    tbar: {id: 'toolbar', height: 35, items: [
+                        {
+                            xtype: 'tbspacer',
+                            width: 10
+                        }, {
+                            xtype: 'tbtext',
+                            cls: 'search',
+                            text: "Find parking: "
+                        }, {
+                            xtype: 'tbspacer',
+                            width: 10
+                        }
+                    ]},
                     width: 940, 
                     height: 400, 
                     border: false,

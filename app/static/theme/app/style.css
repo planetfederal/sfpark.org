@@ -15,3 +15,11 @@ body {
     font-size: 9px;
     bottom: 2px;
 }
+
+.x-toolbar-ct {
+    height: 100%;
+}
+
+.x-toolbar div.search {
+    font-size: 16px;
+}
