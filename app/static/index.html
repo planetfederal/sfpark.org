@@ -48,8 +48,17 @@
             OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
             var app = new gxp.Viewer({
-                portalConfig: {renderTo: 'portal', width: 940, height: 400},
-                portalItems: ["map"],
+                portalConfig: {renderTo: 'portal', border: false, width: 940, height: 400},
+                portalItems: [{
+                    layout:'hbox',
+                    border: false,
+                    region: 'center',
+                    layoutConfig: {
+                        align : 'stretch',
+                        pack  : 'start'
+                     },
+                     items: [{width: 40, border: false}, "map"]
+                }],
                 mapItems: [{
                     xtype: "gx_zoomslider",
                     vertical: true,
@@ -93,7 +102,7 @@
                             width: 10
                         }
                     ]},
-                    region: "center",
+                    flex: 1,
                     border: false,
                     projection: "EPSG:900913",
                     units: "m",
