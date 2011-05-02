@@ -57,7 +57,7 @@
                         align : 'stretch',
                         pack  : 'start'
                      },
-                     items: [{width: 40, border: false}, "map"]
+                     items: [{width: 40, border: false}, {layout: 'vbox', border: false, items: [{id: 'tbar', border: false, height: 35, width: 900, border: false}, "map"]}]
                 }],
                 mapItems: [{
                     xtype: "gx_zoomslider",
@@ -78,7 +78,7 @@
                 tools: [
                     {
                         ptype: "gxp_googlegeocoder",
-                        outputTarget: "toolbar",
+                        outputTarget: "tbar",
                         outputConfig: {
                             hideTrigger: true, 
                             width: 250,
@@ -88,21 +88,7 @@
                     }
                 ],
                 map: {
-                    id: "map",
-                    tbar: {id: 'toolbar', height: 35, items: [
-                        {
-                            xtype: 'tbspacer',
-                            width: 10
-                        }, {
-                            xtype: 'tbtext',
-                            cls: 'search',
-                            text: "Find parking: "
-                        }, {
-                            xtype: 'tbspacer',
-                            width: 10
-                        }
-                    ]},
-                    flex: 1,
+                    id: "map", flex: 1, width: 900,
                     border: false,
                     projection: "EPSG:900913",
                     units: "m",
