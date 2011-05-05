@@ -1,0 +1,34 @@
+/* Insert this into the application CSS to override default Ext/GeoExt theme. File paths should be relative to CSS file. */
+
+.x-window-ml {  
+  background-color: #e1e3e4;  
+}  
+
+.x-window-mc {  
+  background-color: #e1e3e4;  
+  border-width: 0px;  
+}
+
+.x-window-tc,  
+.x-window-bc {  
+  background-image: url("top-bottom.png");  
+}  
+
+.x-window-ml,  
+.x-window-mr  {  
+  background-image: url("left-right.png");  
+}  
+
+.x-window-tl,  
+.x-window-bl {  
+  background-image: url("left-corners.png");  
+}  
+
+.x-window-tr,  
+.x-window-br {  
+  background-image: url("right-corners.png");  
+}
+
+.gx-popup-anc {
+  background-image: url("anchor.png");  
+}
