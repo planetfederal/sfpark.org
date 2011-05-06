@@ -8,6 +8,14 @@
   background-color: #e1e3e4;  
   border-width: 0px;  
 }
+.gx-dark .x-window-ml {  
+  background-color: #050505;  
+}  
+
+.gx-dark .x-window-mc {  
+  background-color: #050505;  
+  border-width: 0px;  
+}
 
 .x-window-tc,  
 .x-window-bc {  
