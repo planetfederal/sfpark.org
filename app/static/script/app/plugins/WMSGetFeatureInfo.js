@@ -30,17 +30,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
      */
     outputTarget: "map",
 
-    /** private: property[popupCache]
-     *  ``Object``
-     */
-    popupCache: null,
-
-    /** api: config[popupTitle]
-     *  ``String``
-     *  Title for info popup (i18n).
-     */
-    popupTitle: "Feature Info",
-    
     /** api: config[vendorParams]
      *  ``Object``
      *  Optional object with properties to be serialized as vendor specific
@@ -50,8 +39,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     /** api: method[addActions]
      */
     addActions: function() {
-        this.popupCache = {};
-        
         var actions = app.plugins.WMSGetFeatureInfo.superclass.addActions.call(this, []);
 
         var info = {controls: []};
@@ -105,33 +92,21 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
      * :arg text: ``String`` Body text.
      */
     displayPopup: function(evt, text) {
-        var popup;
-        var popupKey = evt.xy.x + "." + evt.xy.y;
-
-        if (!(popupKey in this.popupCache)) {
-            popup = this.addOutput({
-                xtype: "gx_popup",
-                plain: true,
-                closable: false,
-                unpinnable: false,
-                html: text,
-                location: evt.xy,
-                map: this.target.mapPanel,
-                width: 200,
-                height: 100,
-                listeners: {
-                    close: (function(key) {
-                        return function(panel){
-                            delete this.popupCache[key];
-                        };
-                    })(popupKey),
-                    scope: this
-                }
-            });
-            this.popupCache[popupKey] = popup;
-        } else {
-            popup = this.popupCache[popupKey];
+        if (this.popup) {
+            this.popup.close();
         }
+
+        this.popup = this.addOutput({
+            xtype: "gx_popup",
+            plain: true,
+            closable: false,
+            unpinnable: false,
+            html: text,
+            location: evt.xy,
+            map: this.target.mapPanel,
+            width: 200,
+            height: 100
+        });
     }
     
 });
