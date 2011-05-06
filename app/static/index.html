@@ -98,6 +98,13 @@
                                             text: "Availability",
                                             handler: function() {
                                                 viewer.mode = app.constants.AVAILABILITY;
+                                                var map = viewer.mapPanel.map;
+                                                for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                                    var layer = map.layers[i];
+                                                    if (layer instanceof OpenLayers.Layer.WMS) {
+                                                        layer.mergeNewParams({'STYLES': 'BLOCKFACE_AVAIL_THRESHOLD'});
+                                                    }
+                                                }
                                             } 
                                         }, {
                                             flex: 1,
@@ -105,6 +112,13 @@
                                             text: "Pricing",
                                             handler: function() {
                                                 viewer.mode = app.constants.PRICING;
+                                                var map = viewer.mapPanel.map;
+                                                for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                                    var layer = map.layers[i];
+                                                    if (layer instanceof OpenLayers.Layer.WMS) {
+                                                        layer.mergeNewParams({'STYLES': 'BLOCKFACE_RATE_THRESHOLD'});
+                                                    }
+                                                }
                                             }
                                         }, {
                                             width: 200,
@@ -195,6 +209,7 @@
                    }, {
                        source: "local",
                        name: "sfpark:BLOCKFACE_AVAILABILITY",
+                       styles: "BLOCKFACE_AVAIL_THRESHOLD",
                        visibility: true
                    }],
                    center: [-13629218, 4545403],
