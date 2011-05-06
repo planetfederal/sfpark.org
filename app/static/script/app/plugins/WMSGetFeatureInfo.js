@@ -59,6 +59,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             queryableLayers.each(function(x){
                 var control = new OpenLayers.Control.WMSGetFeatureInfo({
                     autoActivate: true,
+                    hover: true,
                     infoFormat: 'application/vnd.ogc.gml',
                     maxFeatures: 1,
                     url: x.getLayer().url,
