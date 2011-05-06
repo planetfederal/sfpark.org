@@ -35,12 +35,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
      */
     popupCache: null,
 
-    /** api: config[infoActionTip]
-     *  ``String``
-     *  Text for feature info action tooltip (i18n).
-     */
-    infoActionTip: "Get Feature Info",
-
     /** api: config[popupTitle]
      *  ``String``
      *  Title for info popup (i18n).
@@ -58,23 +52,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     addActions: function() {
         this.popupCache = {};
         
-        var actions = app.plugins.WMSGetFeatureInfo.superclass.addActions.call(this, [{
-            tooltip: this.infoActionTip,
-            iconCls: "gxp-icon-getfeatureinfo",
-            toggleGroup: this.toggleGroup,
-            enableToggle: true,
-            allowDepress: true,
-            toggleHandler: function(button, pressed) {
-                for (var i = 0, len = info.controls.length; i < len; i++){
-                    if (pressed) {
-                        info.controls[i].activate();
-                    } else {
-                        info.controls[i].deactivate();
-                    }
-                }
-             }
-        }]);
-        var infoButton = this.actions[0].items[0];
+        var actions = app.plugins.WMSGetFeatureInfo.superclass.addActions.call(this, []);
 
         var info = {controls: []};
         var updateInfo = function() {
@@ -93,27 +71,23 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             info.controls = [];
             queryableLayers.each(function(x){
                 var control = new OpenLayers.Control.WMSGetFeatureInfo({
+                    autoActivate: true,
+                    infoFormat: 'application/vnd.ogc.gml',
+                    maxFeatures: 1,
                     url: x.getLayer().url,
                     queryVisible: true,
                     layers: [x.getLayer()],
                     vendorParams: this.vendorParams,
                     eventListeners: {
                         getfeatureinfo: function(evt) {
-                            var match = evt.text.match(/<body[^>]*>([\s\S]*)<\/body>/);
-                            if (match && !match[1].match(/^\s*$/)) {
-                                this.displayPopup(
-                                    evt, x.get("title") || x.get("name"), match[1]
-                                );
-                            }
+                            var tpl = new Ext.Template('<h3>{NAME}</h3>{AVAIL_MSG}');
+                            this.displayPopup(evt, tpl.applyTemplate(evt.features[0].attributes));
                         },
                         scope: this
                     }
                 });
                 map.addControl(control);
                 info.controls.push(control);
-                if(infoButton.pressed) {
-                    control.activate();
-                }
             }, this);
 
         };
@@ -128,23 +102,23 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     /** private: method[displayPopup]
      * :arg evt: the event object from a 
      *     :class:`OpenLayers.Control.GetFeatureInfo` control
-     * :arg title: a String to use for the title of the results section 
-     *     reporting the info to the user
      * :arg text: ``String`` Body text.
      */
-    displayPopup: function(evt, title, text) {
+    displayPopup: function(evt, text) {
         var popup;
         var popupKey = evt.xy.x + "." + evt.xy.y;
 
         if (!(popupKey in this.popupCache)) {
             popup = this.addOutput({
                 xtype: "gx_popup",
-                title: this.popupTitle,
-                layout: "accordion",
+                plain: true,
+                closable: false,
+                unpinnable: false,
+                html: text,
                 location: evt.xy,
                 map: this.target.mapPanel,
-                width: 250,
-                height: 300,
+                width: 200,
+                height: 100,
                 listeners: {
                     close: (function(key) {
                         return function(panel){
@@ -158,17 +132,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         } else {
             popup = this.popupCache[popupKey];
         }
-
-        // extract just the body content
-        popup.add({
-            title: title,
-            layout: "fit",
-            html: text,
-            autoScroll: true,
-            autoWidth: true,
-            collapsible: true
-        });
-        popup.doLayout();
     }
     
 });
