@@ -63,32 +63,44 @@
                     },
                     items: [
                         {
-                            width: 50,
-                            bodyCfg: {
-                                tag: "div",
-                                cls: "legend",
-                                html: "<img src='http://sfpark.org/wp-content/uploads/icons/availabilitylegend.png'>"
-                            }, 
-                            border: false
-                        }, {
                             layout: 'vbox', 
                             border: false, 
                             items: [
                                 {
                                     layout: "hbox",
                                     layoutConfig: {
-                                        align : 'stretch',
-                                        pack  : 'start'
+                                        align: "middle"
                                     },
-                                    defaults: {cls: 'search', border: false},
+                                    defaults: {
+                                        cls: 'search', 
+                                        border: false,
+                                        height: 35
+                                    },
                                     items: [
                                         {
-                                            width: 125,
+                                            width: 90,
+                                            flex: 1,
                                             bodyCfg: {tag: 'div', cls: 'findHeader', html: 'Find parking: '}
                                         }, {
-                                            flex: 1,
+                                            width: 260,
                                             bodyCfg: {tag: 'div'},
-                                            id: "tbar"
+                                            id: "geocoder"
+                                        }, {
+                                            flex: 1,
+                                            xtype: "button",
+                                            text: "Availability"
+                                        }, {
+                                            flex: 1,
+                                            xtype: "button",
+                                            text: "Pricing"
+                                        }, {
+                                            width: 200,
+                                            bodyCfg: {tag: "div", cls: "availability-legend"},
+                                            id: "legend"
+                                        }, {
+                                            flex: 1,
+                                            xtype: "button",
+                                            text: "refresh"
                                         }
                                     ],
                                     height: 35, 
@@ -119,7 +131,7 @@
                tools: [
                    {
                        ptype: "gxp_googlegeocoder",
-                       outputTarget: "tbar",
+                       outputTarget: "geocoder",
                        outputConfig: {
                            hideTrigger: true, 
                            width: 250,
