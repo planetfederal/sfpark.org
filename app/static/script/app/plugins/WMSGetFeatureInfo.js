@@ -70,9 +70,9 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                         getfeatureinfo: function(evt) {
                             var tpl;
                             if (this.target.mode === app.constants.AVAILABILITY) {
-                                tpl = new Ext.Template('<h3>{NAME}</h3>{AVAIL_MSG}');
+                                tpl = new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{AVAIL_MSG}');
                             } else {
-                                tpl = new Ext.Template('<h3>{NAME}</h3>{RATE}');
+                                tpl = new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
                             }
                             this.displayPopup(evt, tpl.applyTemplate(evt.features[0].attributes));
                         },
@@ -105,6 +105,8 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.popup = this.addOutput({
             xtype: "gx_popup",
             plain: true,
+            frame: false,
+            bodyCfg: {tag: 'div', cls: 'x-panel-body sfpopup', html: text},
             closable: false,
             unpinnable: false,
             html: text,
