@@ -68,7 +68,12 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                     vendorParams: this.vendorParams,
                     eventListeners: {
                         getfeatureinfo: function(evt) {
-                            var tpl = new Ext.Template('<h3>{NAME}</h3>{AVAIL_MSG}');
+                            var tpl;
+                            if (this.target.mode === app.constants.AVAILABILITY) {
+                                tpl = new Ext.Template('<h3>{NAME}</h3>{AVAIL_MSG}');
+                            } else {
+                                tpl = new Ext.Template('<h3>{NAME}</h3>{RATE}');
+                            }
                             this.displayPopup(evt, tpl.applyTemplate(evt.features[0].attributes));
                         },
                         scope: this

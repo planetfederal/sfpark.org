@@ -52,7 +52,12 @@
             OpenLayers.ProxyHost = "proxy/?url=";
             OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
+            Ext.ns("app.constants");
+            app.constants.AVAILABILITY = 0;
+            app.constants.PRICING = 1;
+
             var viewer = new gxp.Viewer({
+                mode: app.constants.AVAILABILITY,
                 portalConfig: {renderTo: 'map', border: false, width: 940, height: 400},
                 portalItems: [{
                     layout:'hbox',
@@ -89,11 +94,17 @@
                                         }, {
                                             flex: 1,
                                             xtype: "button",
-                                            text: "Availability"
+                                            text: "Availability",
+                                            handler: function() {
+                                                viewer.mode = app.constants.AVAILABILITY;
+                                            } 
                                         }, {
                                             flex: 1,
                                             xtype: "button",
-                                            text: "Pricing"
+                                            text: "Pricing",
+                                            handler: function() {
+                                                viewer.mode = app.constants.PRICING;
+                                            }
                                         }, {
                                             width: 200,
                                             bodyCfg: {tag: "div", cls: "availability-legend"},
