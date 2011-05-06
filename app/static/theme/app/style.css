@@ -26,6 +26,16 @@ body {
     padding: 15px 0 0 12px;
 }
 
+.availability-legend {
+    background: url(img/availability_legend.png) no-repeat;
+}
+
 .findHeader {
+    padding: 5px 5px 5px 5px;
+}
+
+.sfpopup {
+    border: 1px black solid;
+    background-color: #DDDDDD;
     padding: 5px 5px 5px 5px;
 }
