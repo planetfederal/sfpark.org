@@ -51,6 +51,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
         this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
+        this.hourTemplate = new Ext.Template('{DAYS} {TIME}<br/>');
     },
      
     /** api: method[addActions]
@@ -86,17 +87,29 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                     eventListeners: {
                         getfeatureinfo: function(evt) {
                             if (evt.features && evt.features.length > 0) {
-                                this.feature = evt.features[0];
-                                var rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
-                                var featureType = this.feature.gml.featureType;
+                                var feature = evt.features[0];
+                                var rates = Ext.decode(feature.attributes['RATE_SCHED']);
+                                var featureType = feature.gml.featureType;
                                 var tpl = this.templates[featureType][this.target.mode];
-                                var html = tpl.applyTemplate(evt.features[0].attributes);
-                                html += '<div id="sfparkrates" style="display:none"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
-                                for (var i=0,ii=rates.RS.length;i<ii;++i) {
-                                    var rate = rates.RS[i];
-                                    html += this.rateTemplate.applyTemplate(rate);
+                                var html = tpl.applyTemplate(feature.attributes);
+                                if (rates) {
+                                    html += '<div id="sfparkrates" style="display:none"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
+                                    for (var i=0,ii=rates.RS.length;i<ii;++i) {
+                                        var rate = rates.RS[i];
+                                        html += this.rateTemplate.applyTemplate(rate);
+                                    }
+                                    html += '</div></div>';
                                 }
-                                html += '</div></div>';
+                                // opening hours
+                                var hours = Ext.decode(feature.attributes['OP_HRS']);
+                                if (hours) {
+                                    html += '<div id="sfparkhours" style="display:none"><span class="itemHeading itemHeadingHours">Hours:</span><div class="hours">';
+                                    for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
+                                        var hour = hours.OPHRS[i];
+                                        html += this.hourTemplate.applyTemplate(hour);
+                                    }
+                                    html += '</div></div>';
+                                }
                                 this.displayPopup(evt, html);
                             }
                         },
@@ -117,7 +130,14 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     },
 
     expandInfo: function() {
-        Ext.get('sfparkrates').dom.style.display = 'block';
+        var rateInfo = Ext.get('sfparkrates');
+        if (rateInfo) {
+            rateInfo.dom.style.display = 'block';
+        }
+        var hourInfo = Ext.get('sfparkhours');
+        if (hourInfo) {
+            hourInfo.dom.style.display = 'block';
+        }
         this.popup.getTopToolbar().items.get(1).hide();
         this.popup.getTopToolbar().items.get(2).show();
         this.popup.setSize(300, 200);
