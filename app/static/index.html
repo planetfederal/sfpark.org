@@ -102,7 +102,12 @@
                                                 for (var i=0,ii=map.layers.length;i<ii;++i) {
                                                     var layer = map.layers[i];
                                                     if (layer instanceof OpenLayers.Layer.WMS) {
-                                                        layer.mergeNewParams({'STYLES': 'BLOCKFACE_AVAIL_THRESHOLD'});
+                                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                                            layer.mergeNewParams({'STYLES': 'BLOCKFACE_AVAIL_THRESHOLD'});
+                                                        }
+                                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                                            layer.mergeNewParams({'STYLES': 'OSP_AVAIL_THRESHOLD'});
+                                                        }
                                                     }
                                                 }
                                             } 
@@ -116,7 +121,12 @@
                                                 for (var i=0,ii=map.layers.length;i<ii;++i) {
                                                     var layer = map.layers[i];
                                                     if (layer instanceof OpenLayers.Layer.WMS) {
-                                                        layer.mergeNewParams({'STYLES': 'BLOCKFACE_RATE_THRESHOLD'});
+                                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                                            layer.mergeNewParams({'STYLES': 'BLOCKFACE_RATE_THRESHOLD'});
+                                                        }
+                                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                                            layer.mergeNewParams({'STYLES': 'OSP_RATE_THRESHOLD'});
+                                                        }
                                                     }
                                                 }
                                             }
@@ -209,6 +219,11 @@
                        source: "local",
                        name: "sfpark:BLOCKFACE_AVAILABILITY",
                        styles: "BLOCKFACE_AVAIL_THRESHOLD",
+                       visibility: true
+                   }, {
+                       source: "local",
+                       name: "sfpark:OSP_AVAILABILITY",
+                       styles: "OSP_AVAIL_THRESHOLD",
                        visibility: true
                    }],
                    center: [-13629218, 4545403],
