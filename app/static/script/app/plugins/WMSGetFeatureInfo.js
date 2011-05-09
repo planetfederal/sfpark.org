@@ -165,6 +165,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     },
 
     showStreetView: function() {
+        this.streetview = true;
         var geom = this.feature.geometry.getCentroid();
         this.popup.add({
             xtype: "gxp_googlestreetviewpanel",
@@ -187,10 +188,12 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
 
     closePopup: function() {
         this.popup.close();
-        var map = this.target.mapPanel.map;
-        var geom = this.feature.geometry.getCentroid();
-        geom.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-        map.setCenter(new OpenLayers.LonLat(geom.x, geom.y));
+        if (this.streetview === true) {
+            var map = this.target.mapPanel.map;
+            var geom = this.feature.geometry.getCentroid();
+            geom.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+            map.setCenter(new OpenLayers.LonLat(geom.x, geom.y));
+        }
     },
 
     /** private: method[displayPopup]
@@ -202,7 +205,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         if (this.popup) {
             this.popup.close();
         }
-
+        this.streetview = false;
         this.popup = this.addOutput({
             xtype: "gx_popup",
             autoScroll: true,
