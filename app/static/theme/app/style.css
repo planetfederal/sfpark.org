@@ -39,3 +39,7 @@ body {
     background-color: #DDDDDD;
     padding: 5px 5px 5px 5px;
 }
+
+.fullDisplay {
+    display: none;
+}
