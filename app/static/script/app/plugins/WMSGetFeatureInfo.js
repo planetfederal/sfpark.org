@@ -35,6 +35,23 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
      *  Optional object with properties to be serialized as vendor specific
      *  parameters in the requests (e.g. {buffer: 10}).
      */
+
+    constructor: function(config) {
+        app.plugins.WMSGetFeatureInfo.superclass.constructor.apply(this, arguments);
+        // templates for brief display
+        this.templates = {};
+        this.templates['BLOCKFACE_AVAILABILITY'] = {};
+        this.templates['BLOCKFACE_AVAILABILITY'][app.constants.AVAILABILITY] = 
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span>{AVAIL_MSG}</span><br/>');
+        this.templates['BLOCKFACE_AVAILABILITY'][app.constants.PRICING] = 
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
+        this.templates['OSP_AVAILABILITY'] = {};
+        this.templates['OSP_AVAILABILITY'][app.constants.AVAILABILITY] = 
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span>{AVAIL_MSG}</span><br/>');
+        this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
+        this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}</span> <span class="rateQualifier">{RATE}</span><br/>');
+    },
      
     /** api: method[addActions]
      */
@@ -69,13 +86,18 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                     eventListeners: {
                         getfeatureinfo: function(evt) {
                             if (evt.features && evt.features.length > 0) {
-                                var tpl;
-                                if (this.target.mode === app.constants.AVAILABILITY) {
-                                    tpl = new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{AVAIL_MSG}');
-                                } else {
-                                    tpl = new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
+                                this.feature = evt.features[0];
+                                var rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
+                                var featureType = this.feature.gml.featureType;
+                                var tpl = this.templates[featureType][this.target.mode];
+                                var html = tpl.applyTemplate(evt.features[0].attributes);
+                                html += '<div id="sfparkrates" style="display:none"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
+                                for (var i=0,ii=rates.RS.length;i<ii;++i) {
+                                    var rate = rates.RS[i];
+                                    html += this.rateTemplate.applyTemplate(rate);
                                 }
-                                this.displayPopup(evt, tpl.applyTemplate(evt.features[0].attributes));
+                                html += '</div></div>';
+                                this.displayPopup(evt, html);
                             }
                         },
                         scope: this
@@ -92,6 +114,17 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.target.mapPanel.layers.on("remove", updateInfo, this);
         
         return actions;
+    },
+
+    expandInfo: function() {
+        Ext.get('sfparkrates').dom.style.display = 'block';
+        this.popup.getTopToolbar().items.get(1).hide();
+        this.popup.getTopToolbar().items.get(2).show();
+        this.popup.setSize(300, 200);
+    },
+
+    closePopup: function() {
+        this.popup.close();
     },
 
     /** private: method[displayPopup]
@@ -111,7 +144,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             bodyCfg: {tag: 'div', cls: 'x-panel-body sfpopup', html: text},
             closable: false,
             unpinnable: false,
-            html: text,
+            tbar: ['->', {text: "+", handler: this.expandInfo, scope: this}, {text: "X", hidden: true, handler: this.closePopup, scope: this}],
             location: evt.xy,
             map: this.target.mapPanel,
             width: 200,
