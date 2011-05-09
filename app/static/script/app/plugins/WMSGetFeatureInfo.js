@@ -47,7 +47,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
         this.templates['OSP_AVAILABILITY'] = {};
         this.templates['OSP_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span>{AVAIL_MSG}</span><br/>');
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span id="sfparkaddress" style="display:none">{ADDRESS}</span><span id="sfparkphone" style="display:none">{PHONE}</span><span>{AVAIL_MSG}</span><br/>');
         this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
         this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
@@ -138,14 +138,18 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         return actions;
     },
 
-    expandInfo: function() {
-        var rateInfo = Ext.get('sfparkrates');
-        if (rateInfo) {
-            rateInfo.dom.style.display = 'block';
+    showItem: function(id) {
+        var item = Ext.get(id);
+        if (item) {
+            item.dom.style.display = 'block';
         }
-        var hourInfo = Ext.get('sfparkhours');
-        if (hourInfo) {
-            hourInfo.dom.style.display = 'block';
+    },
+
+    expandInfo: function() {
+        // TODO do not use ids but rather a css class
+        var items = ['sfparkrates', 'sfparkhours', 'sfparkaddress', 'sfparkphone'];
+        for (var key in items) {
+            this.showItem(items[key]);
         }
         this.popup.getTopToolbar().items.get(1).hide();
         this.popup.getTopToolbar().items.get(2).show();
