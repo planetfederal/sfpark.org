@@ -50,7 +50,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span>{AVAIL_MSG}</span><br/>');
         this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
-        this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}</span> <span class="rateQualifier">{RATE}</span><br/>');
+        this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
     },
      
     /** api: method[addActions]
