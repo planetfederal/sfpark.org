@@ -38,7 +38,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
 
     constructor: function(config) {
         app.plugins.WMSGetFeatureInfo.superclass.constructor.apply(this, arguments);
-        // templates for brief display
         this.templates = {};
         this.templates['BLOCKFACE_AVAILABILITY'] = {};
         this.templates['BLOCKFACE_AVAILABILITY'][app.constants.AVAILABILITY] = 
@@ -47,7 +46,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
         this.templates['OSP_AVAILABILITY'] = {};
         this.templates['OSP_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span id="sfparkaddress" style="display:none">{ADDRESS}</span><span id="sfparkphone" style="display:none">{PHONE}</span><span>{AVAIL_MSG}</span><br/>');
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span id="sfparkaddress" style="display:none">{ADDRESS} (<a id="streetview" href="#">Street view</a>)</span><span id="sfparkphone" style="display:none">{PHONE}</span><span>{AVAIL_MSG}</span><br/>');
         this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
         this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
@@ -87,16 +86,16 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                     eventListeners: {
                         getfeatureinfo: function(evt) {
                             if (evt.features && evt.features.length > 0) {
-                                var feature = evt.features[0];
+                                this.feature = evt.features[0];
                                 var rates = null;
                                 // protect ourselves against data issues
                                 try {
-                                    rates = Ext.decode(feature.attributes['RATE_SCHED']);
+                                    rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
                                 } catch(err) {
                                 }
-                                var featureType = feature.gml.featureType;
+                                var featureType = this.feature.gml.featureType;
                                 var tpl = this.templates[featureType][this.target.mode];
-                                var html = tpl.applyTemplate(feature.attributes);
+                                var html = tpl.applyTemplate(this.feature.attributes);
                                 if (rates) {
                                     html += '<div id="sfparkrates" style="display:none"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
                                     for (var i=0,ii=rates.RS.length;i<ii;++i) {
@@ -106,7 +105,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                                     html += '</div></div>';
                                 }
                                 // opening hours
-                                var hours = Ext.decode(feature.attributes['OP_HRS']);
+                                var hours = Ext.decode(this.feature.attributes['OP_HRS']);
                                 if (hours) {
                                     html += '<div id="sfparkhours" style="display:none"><span class="itemHeading itemHeadingHours">Hours:</span><div class="hours">';
                                     if (hours.OPHRS instanceof Array) {
@@ -145,12 +144,25 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         }
     },
 
+    showStreetView: function() {
+        var geom = this.feature.geometry.getCentroid();
+        this.popup.add({
+            xtype: "gxp_googlestreetviewpanel",
+            location: new OpenLayers.LonLat(geom.x, geom.y)
+        });
+        this.popup.setSize(800, 300);
+        this.popup.panIntoView();
+    },
+
     expandInfo: function() {
         // TODO do not use ids but rather a css class
         var items = ['sfparkrates', 'sfparkhours', 'sfparkaddress', 'sfparkphone'];
         for (var key in items) {
             this.showItem(items[key]);
         }
+        Ext.get('streetview') && Ext.get('streetview').on("click", function() {
+            this.showStreetView();
+        }, this);
         this.popup.getTopToolbar().items.get(1).hide();
         this.popup.getTopToolbar().items.get(2).show();
         this.popup.setSize(300, 200);
