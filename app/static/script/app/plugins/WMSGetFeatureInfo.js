@@ -24,6 +24,14 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     
     /** api: ptype = app_wmsgetfeatureinfo */
     ptype: "app_wmsgetfeatureinfo",
+
+    /** api: config[headingAttribute]
+     *  ``String``
+     *  Optional feature attribute name with heading information.  Values should
+     *  be degrees clockwise relative to north.  If present, this value will be
+     *  used to orient the camera in the street view.
+     */
+    headingAttribute: "ORIENTATION",
     
     /** api: config[outputTarget]
      *  ``String`` Popups created by this tool are added to the map by default.
@@ -41,7 +49,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.templates = {};
         this.templates['BLOCKFACE_AVAILABILITY'] = {};
         this.templates['BLOCKFACE_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span>{AVAIL_MSG}</span><br/>');
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><span id="sfparkaddress" style="display:none"><a id="streetview" href="#">Street view</a></span><br/><span>{AVAIL_MSG}</span><br/>');
         this.templates['BLOCKFACE_AVAILABILITY'][app.constants.PRICING] = 
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
         this.templates['OSP_AVAILABILITY'] = {};
@@ -144,10 +152,30 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         }
     },
 
+    /** private: method[getOrientationForFeature]
+     *  :arg feature:
+     *
+     *  Return the orientation of a feature based on the case insensitive
+     *  `headingAttribute` property.
+     */
+    getOrientationForFeature: function(feature) {
+        var orientation = 0;
+        if (this.headingAttribute) {
+            for (var attr in feature.attributes) {
+                if (attr.toUpperCase() === this.headingAttribute.toUpperCase()) {
+                    orientation = Number(feature.attributes[attr]);
+                    break;
+                }
+            }
+        }
+        return orientation;
+    },
+
     showStreetView: function() {
         var geom = this.feature.geometry.getCentroid();
         this.popup.add({
             xtype: "gxp_googlestreetviewpanel",
+            orientation: this.getOrientationForFeature(this.feature),
             location: new OpenLayers.LonLat(geom.x, geom.y)
         });
         this.popup.setSize(800, 300);
@@ -170,6 +198,10 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
 
     closePopup: function() {
         this.popup.close();
+        var map = this.target.mapPanel.map;
+        var geom = this.feature.geometry.getCentroid();
+        geom.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+        map.setCenter(new OpenLayers.LonLat(geom.x, geom.y));
     },
 
     /** private: method[displayPopup]
