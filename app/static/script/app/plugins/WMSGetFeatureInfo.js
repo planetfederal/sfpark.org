@@ -88,7 +88,12 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                         getfeatureinfo: function(evt) {
                             if (evt.features && evt.features.length > 0) {
                                 var feature = evt.features[0];
-                                var rates = Ext.decode(feature.attributes['RATE_SCHED']);
+                                var rates = null;
+                                // protect ourselves against data issues
+                                try {
+                                    rates = Ext.decode(feature.attributes['RATE_SCHED']);
+                                } catch(err) {
+                                }
                                 var featureType = feature.gml.featureType;
                                 var tpl = this.templates[featureType][this.target.mode];
                                 var html = tpl.applyTemplate(feature.attributes);
@@ -104,9 +109,13 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                                 var hours = Ext.decode(feature.attributes['OP_HRS']);
                                 if (hours) {
                                     html += '<div id="sfparkhours" style="display:none"><span class="itemHeading itemHeadingHours">Hours:</span><div class="hours">';
-                                    for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
-                                        var hour = hours.OPHRS[i];
-                                        html += this.hourTemplate.applyTemplate(hour);
+                                    if (hours.OPHRS instanceof Array) {
+                                        for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
+                                            var hour = hours.OPHRS[i];
+                                            html += this.hourTemplate.applyTemplate(hour);
+                                        }
+                                    } else {
+                                        html += this.hourTemplate.applyTemplate(hours.OPHRS);
                                     }
                                     html += '</div></div>';
                                 }
