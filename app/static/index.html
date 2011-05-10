@@ -61,92 +61,83 @@
                 mode: app.constants.AVAILABILITY,
                 portalConfig: {renderTo: "mapportal", border: false, width: 940, height: 400},
                 portalItems: [{
-                    layout:'hbox',
-                    border: false,
-                    region: 'center',
-                    layoutConfig: {
-                        align : 'stretch',
-                        pack  : 'start'
-                    },
+                    region: "center",
+                    layout: "vbox", 
+                    border: false, 
                     items: [
                         {
-                            layout: 'vbox', 
-                            border: false, 
+                            xtype: "container",
+                            layout: "hbox",
+                            layoutConfig: {
+                                align: "middle"
+                            },
+                            defaults: {
+                                cls: "search", 
+                                border: false,
+                                height: 35
+                            },
                             items: [
                                 {
-                                    layout: "hbox",
-                                    layoutConfig: {
-                                        align: "middle"
-                                    },
-                                    defaults: {
-                                        cls: 'search', 
-                                        border: false,
-                                        height: 35
-                                    },
-                                    items: [
-                                        {
-                                            width: 90,
-                                            flex: 1,
-                                            bodyCfg: {tag: 'div', cls: 'findHeader', html: 'Find parking: '}
-                                        }, {
-                                            width: 260,
-                                            bodyCfg: {tag: 'div'},
-                                            id: "geocoder"
-                                        }, {
-                                            flex: 1,
-                                            xtype: "button",
-                                            text: "Availability",
-                                            handler: function() {
-                                                viewer.mode = app.constants.AVAILABILITY;
-                                                var map = viewer.mapPanel.map;
-                                                for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                                    var layer = map.layers[i];
-                                                    if (layer instanceof OpenLayers.Layer.WMS) {
-                                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                                            layer.mergeNewParams({'STYLES': 'BLOCKFACE_AVAIL_THRESHOLD'});
-                                                        }
-                                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
-                                                            layer.mergeNewParams({'STYLES': 'OSP_AVAIL_THRESHOLD'});
-                                                        }
-                                                    }
+                                    width: 90,
+                                    flex: 1,
+                                    bodyCfg: {tag: "div", cls: "findHeader", html: "Find parking: "}
+                                }, {
+                                    width: 260,
+                                    bodyCfg: {tag: "div"},
+                                    id: "geocoder"
+                                }, {
+                                    flex: 1,
+                                    xtype: "button",
+                                    text: "Availability",
+                                    handler: function() {
+                                        viewer.mode = app.constants.AVAILABILITY;
+                                        var map = viewer.mapPanel.map;
+                                        for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                            var layer = map.layers[i];
+                                            if (layer instanceof OpenLayers.Layer.WMS) {
+                                                if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "BLOCKFACE_AVAIL_THRESHOLD"});
                                                 }
-                                            } 
-                                        }, {
-                                            flex: 1,
-                                            xtype: "button",
-                                            text: "Pricing",
-                                            handler: function() {
-                                                viewer.mode = app.constants.PRICING;
-                                                var map = viewer.mapPanel.map;
-                                                for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                                    var layer = map.layers[i];
-                                                    if (layer instanceof OpenLayers.Layer.WMS) {
-                                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                                            layer.mergeNewParams({'STYLES': 'BLOCKFACE_RATE_THRESHOLD'});
-                                                        }
-                                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
-                                                            layer.mergeNewParams({'STYLES': 'OSP_RATE_THRESHOLD'});
-                                                        }
-                                                    }
+                                                if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "OSP_AVAIL_THRESHOLD"});
                                                 }
                                             }
-                                        }, {
-                                            width: 200,
-                                            bodyCfg: {tag: "div", cls: "availability-legend"},
-                                            id: "legend"
-                                        }, {
-                                            flex: 1,
-                                            xtype: "button",
-                                            text: "refresh"
                                         }
-                                    ],
-                                    height: 35, 
-                                    width: 900, 
-                                    border: false
-                                }, 
-                                "map"
-                            ]
-                        }
+                                    } 
+                                }, {
+                                    flex: 1,
+                                    xtype: "button",
+                                    text: "Pricing",
+                                    handler: function() {
+                                        viewer.mode = app.constants.PRICING;
+                                        var map = viewer.mapPanel.map;
+                                        for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                            var layer = map.layers[i];
+                                            if (layer instanceof OpenLayers.Layer.WMS) {
+                                                if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "BLOCKFACE_RATE_THRESHOLD"});
+                                                }
+                                                if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "OSP_RATE_THRESHOLD"});
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, {
+                                    width: 200,
+                                    bodyCfg: {tag: "div", cls: "availability-legend"},
+                                    id: "legend"
+                                }, {
+                                    flex: 1,
+                                    xtype: "button",
+                                    text: "refresh"
+                                }
+                            ],
+                            height: 35, 
+                            width: 900, 
+                            border: false
+                        }, 
+                        "map"
                     ]
                }],
                mapItems: [{
