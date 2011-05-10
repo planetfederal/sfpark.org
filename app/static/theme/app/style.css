@@ -17,12 +17,12 @@ body {
 }
 
 .search {
-    padding-top: 5px;
     background-color: #DDDDDD;
 }
-
+.search-item {
+    padding-top: 5px;
+}
 .legend {
-    background-color: #EEEEEE;
     padding: 15px 0 0 12px;
 }
 
@@ -42,4 +42,40 @@ body {
 
 .fullDisplay {
     display: none;
+}
+
+.availability-btn {
+    background: url(img/availability_btn_inactive.png) no-repeat center 3px;
+}
+.x-btn-pressed.availability-btn {
+    background-image: url(img/availability_btn_active.png);
+}
+.availability-btn .x-btn-tl, 
+.availability-btn .x-btn-tr, 
+.availability-btn .x-btn-tc, 
+.availability-btn .x-btn-ml, 
+.availability-btn .x-btn-mr, 
+.availability-btn .x-btn-mc, 
+.availability-btn .x-btn-bl, 
+.availability-btn .x-btn-br, 
+.availability-btn .x-btn-bc {
+    background: transparent;
+}
+
+.pricing-btn {
+    background: url(img/pricing_btn_inactive.png) no-repeat center 3px;
+}
+.x-btn-pressed.pricing-btn {
+    background-image: url(img/pricing_btn_active.png);
+}
+.pricing-btn .x-btn-tl, 
+.pricing-btn .x-btn-tr, 
+.pricing-btn .x-btn-tc, 
+.pricing-btn .x-btn-ml, 
+.pricing-btn .x-btn-mr, 
+.pricing-btn .x-btn-mc, 
+.pricing-btn .x-btn-bl, 
+.pricing-btn .x-btn-br, 
+.pricing-btn .x-btn-bc {
+    background: transparent;
 }

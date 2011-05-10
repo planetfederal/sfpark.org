@@ -68,14 +68,17 @@
                         {
                             xtype: "container",
                             layout: "hbox",
+                            cls: "search", 
                             layoutConfig: {
                                 align: "middle"
                             },
                             defaults: {
-                                cls: "search", 
+                                cls: "search-item", 
                                 border: false,
-                                height: 35
+                                height: 40
                             },
+                            height: 50,
+                            width: 900,
                             items: [
                                 {
                                     width: 90,
@@ -88,11 +91,12 @@
                                 }, {
                                     flex: 1,
                                     xtype: "button",
-                                    text: "Availability",
                                     enableToggle: true,
                                     allowDepress: false,
                                     toggleGroup: "style",
                                     pressed: true,
+                                    cls: "availability-btn",
+                                    width: 120,
                                     handler: function() {
                                         viewer.mode = app.constants.AVAILABILITY;
                                         var map = viewer.mapPanel.map;
@@ -111,10 +115,11 @@
                                 }, {
                                     flex: 1,
                                     xtype: "button",
-                                    text: "Pricing",
                                     enableToggle: true,
                                     allowDepress: false,
                                     toggleGroup: "style",
+                                    cls: "pricing-btn",
+                                    width: 93,
                                     handler: function() {
                                         viewer.mode = app.constants.PRICING;
                                         var map = viewer.mapPanel.map;
@@ -139,10 +144,7 @@
                                     xtype: "button",
                                     text: "refresh"
                                 }
-                            ],
-                            height: 35, 
-                            width: 900, 
-                            border: false
+                            ]
                         }, 
                         "map"
                     ]
