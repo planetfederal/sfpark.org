@@ -89,6 +89,10 @@
                                     flex: 1,
                                     xtype: "button",
                                     text: "Availability",
+                                    enableToggle: true,
+                                    allowDepress: false,
+                                    toggleGroup: "style",
+                                    pressed: true,
                                     handler: function() {
                                         viewer.mode = app.constants.AVAILABILITY;
                                         var map = viewer.mapPanel.map;
@@ -108,6 +112,9 @@
                                     flex: 1,
                                     xtype: "button",
                                     text: "Pricing",
+                                    enableToggle: true,
+                                    allowDepress: false,
+                                    toggleGroup: "style",
                                     handler: function() {
                                         viewer.mode = app.constants.PRICING;
                                         var map = viewer.mapPanel.map;
