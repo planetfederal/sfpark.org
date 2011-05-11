@@ -99,6 +99,8 @@
                                     width: 120,
                                     handler: function() {
                                         viewer.mode = app.constants.AVAILABILITY;
+                                        Ext.get('legend-body').removeClass("pricing-legend");
+                                        Ext.get('legend-body').addClass("availability-legend");
                                         var map = viewer.mapPanel.map;
                                         for (var i=0,ii=map.layers.length;i<ii;++i) {
                                             var layer = map.layers[i];
@@ -122,6 +124,8 @@
                                     width: 93,
                                     handler: function() {
                                         viewer.mode = app.constants.PRICING;
+                                        Ext.get('legend-body').removeClass("availability-legend");
+                                        Ext.get('legend-body').addClass("pricing-legend");
                                         var map = viewer.mapPanel.map;
                                         for (var i=0,ii=map.layers.length;i<ii;++i) {
                                             var layer = map.layers[i];
@@ -137,7 +141,7 @@
                                     }
                                 }, {
                                     width: 200,
-                                    bodyCfg: {tag: "div", cls: "availability-legend"},
+                                    bodyCfg: {tag: "div", id: "legend-body", cls: "availability-legend"},
                                     id: "legend"
                                 }, {
                                     flex: 1,

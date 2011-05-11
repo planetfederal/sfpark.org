@@ -30,6 +30,10 @@ body {
     background: url(img/availability_legend.png) no-repeat;
 }
 
+.pricing-legend {
+    background: url(img/pricing_legend.png) no-repeat;
+}
+
 .findHeader {
     padding: 5px 5px 5px 5px;
 }
