@@ -60,90 +60,75 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
         this.hourTemplate = new Ext.Template('{DAYS} {TIME}<br/>');
     },
+
+    handleGetFeatureInfo: function(evt) {
+        if (evt.features && evt.features.length > 0) {
+            this.feature = evt.features[0];
+            var rates = null;
+            rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
+            var featureType = this.feature.gml.featureType;
+            var tpl = this.templates[featureType][this.target.mode];
+            var html = tpl.applyTemplate(this.feature.attributes);
+            if (rates) {
+                html += '<div class="fullDisplay"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
+                // RS = Rate Schedule
+                for (var i=0,ii=rates.RS.length;i<ii;++i) {
+                    var rate = rates.RS[i];
+                    html += this.rateTemplate.applyTemplate(rate);
+                    // RR = Rate Restriction
+                    if (rate["RR"]) {
+                        for (var j=0,jj=rate["RR"].length;j<jj;++j) {
+                            html += rate["RR"][j] + "<br/>";
+                        }
+                    }
+                }
+                html += '</div></div>';
+            }
+            // opening hours
+            var hours = Ext.decode(this.feature.attributes['OP_HRS']);
+            if (hours) {
+                html += '<div class="fullDisplay"><span class="itemHeading itemHeadingHours">Hours:</span><div class="hours">';
+                if (hours.OPHRS instanceof Array) {
+                    for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
+                        var hour = hours.OPHRS[i];
+                        html += this.hourTemplate.applyTemplate(hour);
+                    }
+                } else {
+                    html += this.hourTemplate.applyTemplate(hours.OPHRS);
+                }
+                html += '</div></div>';
+            }
+            this.displayPopup(evt, html);
+        }
+    },
      
     /** api: method[addActions]
      */
     addActions: function() {
         var actions = app.plugins.WMSGetFeatureInfo.superclass.addActions.call(this, []);
 
-        var info = {controls: []};
-        var updateInfo = function() {
-            var queryableLayers = this.target.mapPanel.layers.queryBy(function(x){
-                return x.get("queryable");
-            });
-
+        var updateInfo = function(evt) {
             var map = this.target.mapPanel.map;
-            var control;
-            for (var i = 0, len = info.controls.length; i < len; i++){
-                control = info.controls[i];
-                control.deactivate();  // TODO: remove when http://trac.openlayers.org/ticket/2130 is closed
-                control.destroy();
+            if (this.control) {
+                this.control.deactivate();  // TODO: remove when http://trac.openlayers.org/ticket/2130 is closed
+                this.control.destroy();
             }
-
-            info.controls = [];
-            queryableLayers.each(function(x){
-                var control = new OpenLayers.Control.WMSGetFeatureInfo({
-                    autoActivate: true,
-                    hover: true,
-                    infoFormat: 'application/vnd.ogc.gml',
-                    maxFeatures: 1,
-                    url: x.getLayer().url,
-                    queryVisible: true,
-                    layers: [x.getLayer()],
-                    vendorParams: this.vendorParams,
-                    eventListeners: {
-                        getfeatureinfo: function(evt) {
-                            if (evt.features && evt.features.length > 0) {
-                                this.feature = evt.features[0];
-                                var rates = null;
-                                rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
-                                var featureType = this.feature.gml.featureType;
-                                var tpl = this.templates[featureType][this.target.mode];
-                                var html = tpl.applyTemplate(this.feature.attributes);
-                                if (rates) {
-                                    html += '<div class="fullDisplay"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
-                                    // RS = Rate Schedule
-                                    for (var i=0,ii=rates.RS.length;i<ii;++i) {
-                                        var rate = rates.RS[i];
-                                        html += this.rateTemplate.applyTemplate(rate);
-                                        // RR = Rate Restriction
-                                        if (rate["RR"]) {
-                                            for (var j=0,jj=rate["RR"].length;j<jj;++j) {
-                                                html += rate["RR"][j] + "<br/>";
-                                            }
-                                        }
-                                    }
-                                    html += '</div></div>';
-                                }
-                                // opening hours
-                                var hours = Ext.decode(this.feature.attributes['OP_HRS']);
-                                if (hours) {
-                                    html += '<div class="fullDisplay"><span class="itemHeading itemHeadingHours">Hours:</span><div class="hours">';
-                                    if (hours.OPHRS instanceof Array) {
-                                        for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
-                                            var hour = hours.OPHRS[i];
-                                            html += this.hourTemplate.applyTemplate(hour);
-                                        }
-                                    } else {
-                                        html += this.hourTemplate.applyTemplate(hours.OPHRS);
-                                    }
-                                    html += '</div></div>';
-                                }
-                                this.displayPopup(evt, html);
-                            }
-                        },
-                        scope: this
-                    }
-                });
-                map.addControl(control);
-                info.controls.push(control);
-            }, this);
-
+            this.control = new OpenLayers.Control.WMSGetFeatureInfo({
+                autoActivate: true,
+                hover: true,
+                infoFormat: 'application/vnd.ogc.gml',
+                maxFeatures: 1,
+                queryVisible: true,
+                vendorParams: this.vendorParams,
+                eventListeners: {
+                    getfeatureinfo: this.handleGetFeatureInfo,
+                    scope: this
+                }
+            });
+            map.addControl(this.control);
         };
         
-        this.target.mapPanel.layers.on("update", updateInfo, this);
         this.target.mapPanel.layers.on("add", updateInfo, this);
-        this.target.mapPanel.layers.on("remove", updateInfo, this);
         
         return actions;
     },
