@@ -96,19 +96,22 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                             if (evt.features && evt.features.length > 0) {
                                 this.feature = evt.features[0];
                                 var rates = null;
-                                // protect ourselves against data issues
-                                try {
-                                    rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
-                                } catch(err) {
-                                }
+                                rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
                                 var featureType = this.feature.gml.featureType;
                                 var tpl = this.templates[featureType][this.target.mode];
                                 var html = tpl.applyTemplate(this.feature.attributes);
                                 if (rates) {
                                     html += '<div class="fullDisplay"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
+                                    // RS = Rate Schedule
                                     for (var i=0,ii=rates.RS.length;i<ii;++i) {
                                         var rate = rates.RS[i];
                                         html += this.rateTemplate.applyTemplate(rate);
+                                        // RR = Rate Restriction
+                                        if (rate["RR"]) {
+                                            for (var j=0,jj=rate["RR"].length;j<jj;++j) {
+                                                html += rate["RR"][j] + "<br/>";
+                                            }
+                                        }
                                     }
                                     html += '</div></div>';
                                 }
