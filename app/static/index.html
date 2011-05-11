@@ -160,11 +160,6 @@
                         "map"
                     ]
                }],
-               mapItems: [{
-                   xtype: "gx_zoomslider",
-                   vertical: true,
-                   height: 100
-               }],
                sources: {
                    local: {
                        ptype: "gxp_wmssource",
@@ -239,6 +234,11 @@
                        name: "sfpark:OSP_AVAILABILITY",
                        styles: "OSP_AVAIL_THRESHOLD",
                        visibility: true
+                   }],
+                   items: [{
+                      xtype: "gx_zoomslider",
+                      vertical: true,
+                      height: 100
                    }]
                }
            });
