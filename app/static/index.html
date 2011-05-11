@@ -159,89 +159,89 @@
                         }, 
                         "map"
                     ]
-               }],
-               sources: {
-                   local: {
-                       ptype: "gxp_wmssource",
-                       url: "/geoserver/ows",
-                       title: "Local GeoServer",
-                       version: "1.1.1"
-                   },
-                   google: {
-                       ptype: "gxp_googlesource"
-                   }
-               },
-               tools: [
-                   {
-                       ptype: "app_wmsgetfeatureinfo",
-                       actionTarget: null
-                   }, {
-                       ptype: "app_pilotareas",
-                       outputTarget: "geocoder",
-                       outputConfig: {
-                           width: 250,
-                           emptyText: "Select a Neighborhood"
-                           /*bounds: [-122.444, 37.752, -122.388, 37.809],
-                           emptyText: "Type an address, zip code, or intersection",
-                           listEmptyText: "- no matches -"*/
-                       }
-                   }
-               ],
-               map: {
-                   id: "map", 
-                   height: 300,
-                   border: false,
-                   projection: "EPSG:900913",
-                   units: "m",
-                   numZoomLevels: 21,
-                   maxResolution: 156543.03390625,
-                   maxExtent: [
-                       -20037508.34, -20037508.34,
-                       20037508.34, 20037508.34
-                   ],
-                   extent: [-13630460.905642, 4544450.3840456, -13624163.334642, 4552410.6141212],
-                   layers: [{
-                       source: "google",
-                       title: "Road Map",
-                       name: "ROADMAP",
-                       group: "background",
-                       visibility: true
-                   }, {
-                       source: "google",
-                       title: "Hybrid Map",
-                       name: "HYBRID",
-                       group: "background",
-                       visibility: false
-                   }, {
-                       source: "google",
-                       title: "Satellite Map",
-                       name: "SATELLITE",
-                       group: "background",
-                       visibility: false
-                   }, {
-                       source: "google",
-                       title: "Terrain Map",
-                       name: "TERRAIN",
-                       group: "background",
-                       visibility: false
-                   }, {
-                       source: "local",
-                       name: "sfpark:BLOCKFACE_AVAILABILITY",
-                       styles: "BLOCKFACE_AVAIL_THRESHOLD",
-                       visibility: true
-                   }, {
-                       source: "local",
-                       name: "sfpark:OSP_AVAILABILITY",
-                       styles: "OSP_AVAIL_THRESHOLD",
-                       visibility: true
-                   }],
-                   items: [{
-                      xtype: "gx_zoomslider",
-                      vertical: true,
-                      height: 100
-                   }]
-               }
-           });
+                }],
+                sources: {
+                    local: {
+                        ptype: "gxp_wmssource",
+                        url: "/geoserver/ows",
+                        title: "Local GeoServer",
+                        version: "1.1.1"
+                    },
+                    google: {
+                        ptype: "gxp_googlesource"
+                    }
+                },
+                tools: [
+                    {
+                        ptype: "app_wmsgetfeatureinfo",
+                        actionTarget: null
+                    }, {
+                        ptype: "app_pilotareas",
+                        outputTarget: "geocoder",
+                        outputConfig: {
+                            width: 250,
+                            emptyText: "Select a Neighborhood"
+                            /*bounds: [-122.444, 37.752, -122.388, 37.809],
+                            emptyText: "Type an address, zip code, or intersection",
+                            listEmptyText: "- no matches -"*/
+                        }
+                    }
+                ],
+                map: {
+                    id: "map", 
+                    height: 300,
+                    border: false,
+                    projection: "EPSG:900913",
+                    units: "m",
+                    numZoomLevels: 21,
+                    maxResolution: 156543.03390625,
+                    maxExtent: [
+                        -20037508.34, -20037508.34,
+                        20037508.34, 20037508.34
+                    ],
+                    extent: [-13630460.905642, 4544450.3840456, -13624163.334642, 4552410.6141212],
+                    layers: [{
+                        source: "google",
+                        title: "Road Map",
+                        name: "ROADMAP",
+                        group: "background",
+                        visibility: true
+                    }, {
+                        source: "google",
+                        title: "Hybrid Map",
+                        name: "HYBRID",
+                        group: "background",
+                        visibility: false
+                    }, {
+                        source: "google",
+                        title: "Satellite Map",
+                        name: "SATELLITE",
+                        group: "background",
+                        visibility: false
+                    }, {
+                        source: "google",
+                        title: "Terrain Map",
+                        name: "TERRAIN",
+                        group: "background",
+                        visibility: false
+                    }, {
+                        source: "local",
+                        name: "sfpark:BLOCKFACE_AVAILABILITY",
+                        styles: "BLOCKFACE_AVAIL_THRESHOLD",
+                        visibility: true
+                    }, {
+                        source: "local",
+                        name: "sfpark:OSP_AVAILABILITY",
+                        styles: "OSP_AVAIL_THRESHOLD",
+                        visibility: true
+                    }],
+                    items: [{
+                        xtype: "gx_zoomslider",
+                        vertical: true,
+                        height: 100
+                    }]
+                }
+            });
 
         </script>
 
