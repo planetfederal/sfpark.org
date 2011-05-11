@@ -49,9 +49,9 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.templates = {};
         this.templates['BLOCKFACE_AVAILABILITY'] = {};
         this.templates['BLOCKFACE_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><a id="streetview" href="#">Street view</a></span><br/><span>{AVAIL_MSG}</span><br/>');
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><a id="streetview" href="#">Street view</a></span><br/><span>{AVAIL_MSG}</span><br/>');
         this.templates['BLOCKFACE_AVAILABILITY'][app.constants.PRICING] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
+            new Ext.Template('<span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><br/>{RATE}');
         this.templates['OSP_AVAILABILITY'] = {};
         this.templates['OSP_AVAILABILITY'][app.constants.AVAILABILITY] = 
             new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span class="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}<br/></span><span>{AVAIL_MSG}</span><br/>');
