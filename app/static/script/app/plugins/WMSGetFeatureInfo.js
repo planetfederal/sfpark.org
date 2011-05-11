@@ -99,6 +99,10 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                 html += '</div></div>';
             }
             this.displayPopup(evt, html);
+        } else {
+            if (this.popup && this.popup.expanded === false) {
+                this.popup.close();
+            }
         }
     },
      
@@ -174,6 +178,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     },
 
     expandInfo: function() {
+        this.popup.expanded = true;
         Ext.select('.fullDisplay').toggleClass('fullDisplay');
         Ext.get('streetview') && Ext.get('streetview').on("click", function() {
             this.showStreetView();
@@ -205,6 +210,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.streetview = false;
         this.popup = this.addOutput({
             xtype: "gx_popup",
+            expanded: false,
             autoScroll: true,
             resizable: false,
             plain: true,
