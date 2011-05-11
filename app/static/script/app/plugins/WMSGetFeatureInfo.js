@@ -109,6 +109,14 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
 
         var updateInfo = function(evt) {
             var map = this.target.mapPanel.map;
+            var queryableLayers = this.target.mapPanel.layers.queryBy(function(x){
+                return x.get("queryable");
+            });
+            var layers = [];
+            queryableLayers.each(function(x){
+                layers.push(x.getLayer());
+            });
+            layers.reverse();
             if (this.control) {
                 this.control.deactivate();  // TODO: remove when http://trac.openlayers.org/ticket/2130 is closed
                 this.control.destroy();
@@ -116,6 +124,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             this.control = new OpenLayers.Control.WMSGetFeatureInfo({
                 autoActivate: true,
                 hover: true,
+                layers: layers,
                 infoFormat: 'application/vnd.ogc.gml',
                 maxFeatures: 1,
                 queryVisible: true,
