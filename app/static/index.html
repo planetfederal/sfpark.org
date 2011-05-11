@@ -60,11 +60,16 @@
 
             var viewer = new gxp.Viewer({
                 mode: app.constants.AVAILABILITY,
-                portalConfig: {renderTo: "mapportal", border: false, width: 940, height: 400},
+                portalConfig: {
+                    renderTo: "mapportal",
+                    border: false, 
+                    width: 940, 
+                    height: 400,
+                    region: "center"
+                },
                 portalItems: [{
                     region: "center",
-                    layout: "vbox", 
-                    border: false, 
+                    xtype: "container",
                     items: [
                         {
                             xtype: "container",
@@ -79,7 +84,6 @@
                                 height: 40
                             },
                             height: 50,
-                            width: 900,
                             items: [
                                 {
                                     width: 90,
