@@ -48,10 +48,13 @@ body {
 }
 
 .availability-btn {
-    background: url(img/availability_btn_inactive.png) no-repeat center 3px;
+    background: url(img/availability_pricing_btns.png) no-repeat 0px 0px;
+}
+.x-btn-over.availability-btn {
+    background-position: 0px -33px;
 }
 .x-btn-pressed.availability-btn {
-    background-image: url(img/availability_btn_active.png);
+    background-position: 0 -66px;
 }
 .availability-btn .x-btn-tl, 
 .availability-btn .x-btn-tr, 
@@ -66,10 +69,13 @@ body {
 }
 
 .pricing-btn {
-    background: url(img/pricing_btn_inactive.png) no-repeat center 3px;
+    background: url(img/availability_pricing_btns.png) no-repeat -99px 0px;
+}
+.x-btn-over.pricing-btn {
+    background-position: -99px -33px;
 }
 .x-btn-pressed.pricing-btn {
-    background-image: url(img/pricing_btn_active.png);
+    background-position: -99px -66px;
 }
 .pricing-btn .x-btn-tl, 
 .pricing-btn .x-btn-tr, 
