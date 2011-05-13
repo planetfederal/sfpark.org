@@ -32,6 +32,7 @@
         
         <!-- app resources -->
         <link rel="stylesheet" type="text/css" href="theme/app/style.css">
+        <link rel="stylesheet" type="text/css" href="theme/app/ext/ext.css">
         <!--[if IE]><link rel="stylesheet" type="text/css" href="theme/app/ie.css"/><![endif]-->
         <script type="text/javascript" src="script/app.js"></script>
         
@@ -57,164 +58,223 @@
             app.constants.AVAILABILITY = 0;
             app.constants.PRICING = 1;
 
+            app.availabilityTip = "<div class='legendTip'><p class='legendTitle'>Availability</p>";
+            app.availabilityTip += "<p><img src='theme/app/img/bullet_avail_low.png'><span class='legendDescription'>Low < 15%</span></p>";
+            app.availabilityTip += "<p><img src='theme/app/img/bullet_avail_med.png'><span class='legendDescription'>Medium 15-30%</span></p>";
+            app.availabilityTip += "<p><img src='theme/app/img/bullet_avail_high.png'><span class='legendDescription'>High > 30%</span></p>";
+            app.availabilityTip += "<p><img src='theme/app/img/bullet_nodata.png'><span class='legendDescription'>No data</span></p>";
+            app.availabilityTip += "</div>";
+
+            app.rateTip = "<div class='legendTip'><p class='legendTitle'>Rates</p>";
+            app.rateTip += "<p><img src='theme/app/img/bullet_rates_low.png'><span class='legendDescription'>$0 - $2.00/hr</span></p>";
+            app.rateTip += "<p><img src='theme/app/img/bullet_rates_med.png'><span class='legendDescription'>$2.01 - $4.00/hr</span></p>";
+            app.rateTip += "<p><img src='theme/app/img/bullet_rates_high.png'><span class='legendDescription'>> $4.00/hr</span></p>";
+            app.rateTip += "<p><img src='theme/app/img/bullet_nodata.png'><span class='legendDescription'>No data</span></p>";
+            app.rateTip += "</div>";
+
             var viewer = new gxp.Viewer({
                 mode: app.constants.AVAILABILITY,
-                portalConfig: {renderTo: 'map', border: false, width: 940, height: 400},
+                portalConfig: {
+                    renderTo: "mapportal",
+                    border: false, 
+                    width: 940, 
+                    height: 400,
+                    region: "center"
+                },
                 portalItems: [{
-                    layout:'hbox',
-                    border: false,
-                    region: 'center',
-                    layoutConfig: {
-                        align : 'stretch',
-                        pack  : 'start'
-                    },
+                    region: "center",
+                    xtype: "container",
                     items: [
                         {
-                            layout: 'vbox', 
-                            border: false, 
+                            xtype: "container",
+                            layout: "hbox",
+                            cls: "search", 
+                            layoutConfig: {
+                                align: "middle"
+                            },
+                            defaults: {
+                                cls: "search-item", 
+                                border: false,
+                                height: 40
+                            },
+                            height: 50,
                             items: [
                                 {
-                                    layout: "hbox",
-                                    layoutConfig: {
-                                        align: "middle"
-                                    },
-                                    defaults: {
-                                        cls: 'search', 
-                                        border: false,
-                                        height: 35
-                                    },
-                                    items: [
-                                        {
-                                            width: 90,
-                                            flex: 1,
-                                            bodyCfg: {tag: 'div', cls: 'findHeader', html: 'Find parking: '}
-                                        }, {
-                                            width: 260,
-                                            bodyCfg: {tag: 'div'},
-                                            id: "geocoder"
-                                        }, {
-                                            flex: 1,
-                                            xtype: "button",
-                                            text: "Availability",
-                                            handler: function() {
-                                                viewer.mode = app.constants.AVAILABILITY;
-                                                var map = viewer.mapPanel.map;
-                                                for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                                    var layer = map.layers[i];
-                                                    if (layer instanceof OpenLayers.Layer.WMS) {
-                                                        layer.mergeNewParams({'STYLES': 'BLOCKFACE_AVAIL_THRESHOLD'});
-                                                    }
+                                    width: 90,
+                                    flex: 1,
+                                    bodyCfg: {tag: "div", cls: "findHeader", html: "Find parking: "}
+                                }, {
+                                    width: 260,
+                                    bodyCfg: {tag: "div"},
+                                    id: "geocoder"
+                                }, {
+                                    flex: 1,
+                                    xtype: "button",
+                                    enableToggle: true,
+                                    allowDepress: false,
+                                    toggleGroup: "style",
+                                    pressed: true,
+                                    cls: "availability-btn",
+                                    width: 99,
+                                    height: 33,
+                                    handler: function() {
+                                        viewer.mode = app.constants.AVAILABILITY;
+                                        Ext.get('legend-body').dom.qtip = app.availabilityTip;
+                                        Ext.get('legend-body').removeClass("pricing-legend");
+                                        Ext.get('legend-body').addClass("availability-legend");
+                                        var map = viewer.mapPanel.map;
+                                        for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                            var layer = map.layers[i];
+                                            if (layer instanceof OpenLayers.Layer.WMS) {
+                                                if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "BLOCKFACE_AVAIL_THRESHOLD"});
                                                 }
-                                            } 
-                                        }, {
-                                            flex: 1,
-                                            xtype: "button",
-                                            text: "Pricing",
-                                            handler: function() {
-                                                viewer.mode = app.constants.PRICING;
-                                                var map = viewer.mapPanel.map;
-                                                for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                                    var layer = map.layers[i];
-                                                    if (layer instanceof OpenLayers.Layer.WMS) {
-                                                        layer.mergeNewParams({'STYLES': 'BLOCKFACE_RATE_THRESHOLD'});
-                                                    }
+                                                if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "OSP_AVAIL_THRESHOLD"});
                                                 }
                                             }
-                                        }, {
-                                            width: 200,
-                                            bodyCfg: {tag: "div", cls: "availability-legend"},
-                                            id: "legend"
-                                        }, {
-                                            flex: 1,
-                                            xtype: "button",
-                                            text: "refresh"
                                         }
-                                    ],
-                                    height: 35, 
-                                    width: 900, 
-                                    border: false
-                                }, 
-                                "map"
+                                    } 
+                                }, {
+                                    flex: 1,
+                                    xtype: "button",
+                                    enableToggle: true,
+                                    allowDepress: false,
+                                    toggleGroup: "style",
+                                    cls: "pricing-btn",
+                                    width: 73,
+                                    height: 33,
+                                    handler: function() {
+                                        viewer.mode = app.constants.PRICING;
+                                        Ext.get('legend-body').dom.qtip = app.rateTip;
+                                        Ext.get('legend-body').removeClass("availability-legend");
+                                        Ext.get('legend-body').addClass("pricing-legend");
+                                        var map = viewer.mapPanel.map;
+                                        for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                            var layer = map.layers[i];
+                                            if (layer instanceof OpenLayers.Layer.WMS) {
+                                                if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "BLOCKFACE_RATE_THRESHOLD"});
+                                                }
+                                                if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                                    layer.mergeNewParams({"STYLES": "OSP_RATE_THRESHOLD"});
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, {
+                                    width: 200,
+                                    bodyCfg: {tag: "div", qtip: app.availabilityTip, id: "legend-body", cls: "availability-legend"},
+                                    id: "legend"
+                                }, {
+                                    flex: 1,
+                                    xtype: "button",
+                                    text: "refresh",
+                                    handler: function() {
+                                        var map = viewer.mapPanel.map;
+                                        for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                            var layer = map.layers[i];
+                                            if (layer instanceof OpenLayers.Layer.WMS) {
+                                                layer.redraw(true);
+                                            }
+                                        }
+                                        for (var key in viewer.tools) {
+                                            var tool = viewer.tools[key];
+                                            if (tool.ptype == "app_wmsgetfeatureinfo") {
+                                                tool.closePopup();
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
                             ]
-                        }
+                        }, 
+                        "map"
                     ]
-               }],
-               mapItems: [{
-                   xtype: "gx_zoomslider",
-                   vertical: true,
-                   height: 100
-               }],
-               sources: {
-                   local: {
-                       ptype: "gxp_wmssource",
-                       url: "/geoserver/ows",
-                       title: "Local GeoServer",
-                       version: "1.1.1"
-                   },
-                   google: {
-                       ptype: "gxp_googlesource"
-                   }
-               },
-               tools: [
-                   {
-                       ptype: "app_wmsgetfeatureinfo",
-                       actionTarget: null
-                   }, {
-                       ptype: "gxp_googlegeocoder",
-                       outputTarget: "geocoder",
-                       outputConfig: {
-                           width: 250,
-                           emptyText: "Type an address, zip code, or intersection",
-                           listEmptyText: "- no matches -"
-                       }
-                   }
-               ],
-               map: {
-                   id: "map", flex: 1, width: 900,
-                   border: false,
-                   projection: "EPSG:900913",
-                   units: "m",
-                   numZoomLevels: 21,
-                   maxResolution: 156543.03390625,
-                   maxExtent: [
-                       -20037508.34, -20037508.34,
-                       20037508.34, 20037508.34
-                   ],
-                   extent: [-13650159, 4534735, -13609227, 4554724],
-                   layers: [{
-                       source: "google",
-                       title: "Road Map",
-                       name: "ROADMAP",
-                       group: "background",
-                       visibility: true
-                   }, {
-                       source: "google",
-                       title: "Hybrid Map",
-                       name: "HYBRID",
-                       group: "background",
-                       visibility: false
-                   }, {
-                       source: "google",
-                       title: "Satellite Map",
-                       name: "SATELLITE",
-                       group: "background",
-                       visibility: false
-                   }, {
-                       source: "google",
-                       title: "Terrain Map",
-                       name: "TERRAIN",
-                       group: "background",
-                       visibility: false
-                   }, {
-                       source: "local",
-                       name: "sfpark:BLOCKFACE_AVAILABILITY",
-                       styles: "BLOCKFACE_AVAIL_THRESHOLD",
-                       visibility: true
-                   }],
-                   center: [-13629218, 4545403],
-                   zoom: 13
-               }
-           });
+                }],
+                sources: {
+                    local: {
+                        ptype: "gxp_wmssource",
+                        url: "/geoserver/ows",
+                        title: "Local GeoServer",
+                        version: "1.1.1"
+                    },
+                    google: {
+                        ptype: "gxp_googlesource"
+                    }
+                },
+                tools: [
+                    {
+                        ptype: "app_wmsgetfeatureinfo",
+                        actionTarget: null
+                    }, {
+                        ptype: "app_pilotareas",
+                        url: "/geoserver/ows",
+                        featureType: "PILOT_AREAS",
+                        featureNS: "sfpark",
+                        displayField: "PM_DISTRICT_NAME",
+                        outputTarget: "geocoder",
+                        outputConfig: {
+                            width: 250,
+                            emptyText: "Select a Neighborhood"
+                        }
+                    }
+                ],
+                map: {
+                    id: "map", 
+                    height: 300,
+                    border: false,
+                    projection: "EPSG:900913",
+                    units: "m",
+                    numZoomLevels: 21,
+                    maxResolution: 156543.03390625,
+                    maxExtent: [
+                        -20037508.34, -20037508.34,
+                        20037508.34, 20037508.34
+                    ],
+                    extent: [-13630460.905642, 4544450.3840456, -13624163.334642, 4552410.6141212],
+                    layers: [{
+                        source: "google",
+                        title: "Road Map",
+                        name: "ROADMAP",
+                        group: "background",
+                        visibility: true
+                    }, {
+                        source: "google",
+                        title: "Hybrid Map",
+                        name: "HYBRID",
+                        group: "background",
+                        visibility: false
+                    }, {
+                        source: "google",
+                        title: "Satellite Map",
+                        name: "SATELLITE",
+                        group: "background",
+                        visibility: false
+                    }, {
+                        source: "google",
+                        title: "Terrain Map",
+                        name: "TERRAIN",
+                        group: "background",
+                        visibility: false
+                    }, {
+                        source: "local",
+                        name: "sfpark:BLOCKFACE_AVAILABILITY",
+                        styles: "BLOCKFACE_AVAIL_THRESHOLD",
+                        visibility: true
+                    }, {
+                        source: "local",
+                        name: "sfpark:OSP_AVAILABILITY",
+                        styles: "OSP_AVAIL_THRESHOLD",
+                        visibility: true
+                    }],
+                    items: [{
+                        xtype: "gx_zoomslider",
+                        vertical: true,
+                        height: 100
+                    }]
+                }
+            });
 
         </script>
 
@@ -232,7 +292,7 @@
                         <div class="navi"></div> 
                         <div id="items">
                             <div class="panel">
-                                <div id="map"></div>
+                                <div id="mapportal"></div>
                             </div>
                         </div>
                     </div>
@@ -244,11 +304,7 @@
                             <h3>Details</h3>            
                             <div class="textwidget">
                                 <p>
-                                    TODO: Describe what the map does here.
-                                </p>
-                                <p>
-                                    This map is a rough demonstration of map feature selection by <a href="http://opengeo.org/">OpenGeo</a>.
-                                    The data used is a limited set and is meant for demonstration purposes only.
+                                    This prototype is a demonstration of rewrite of the sfpark.org map functionality by <a href="http://opengeo.org/">OpenGeo</a>.
                                 </p>
                                 <a title="Learn More About OpenGeo" class="blue_btn" href="http://opengeo.org/">Learn More</a>
                             </div>

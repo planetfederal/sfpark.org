@@ -17,12 +17,12 @@ body {
 }
 
 .search {
-    padding-top: 5px;
     background-color: #DDDDDD;
 }
-
+.search-item {
+    padding-top: 5px;
+}
 .legend {
-    background-color: #EEEEEE;
     padding: 15px 0 0 12px;
 }
 
@@ -30,12 +30,91 @@ body {
     background: url(img/availability_legend.png) no-repeat;
 }
 
+.pricing-legend {
+    background: url(img/pricing_legend.png) no-repeat;
+}
+
 .findHeader {
     padding: 5px 5px 5px 5px;
 }
 
 .sfpopup {
-    border: 1px black solid;
     background-color: #DDDDDD;
     padding: 5px 5px 5px 5px;
+}
+
+.fullDisplay {
+    display: none;
+}
+
+.availability-btn {
+    background: url(img/availability_pricing_btns.png) no-repeat 0px 0px;
+}
+.x-btn-over.availability-btn {
+    background-position: 0px -33px;
+}
+.x-btn-pressed.availability-btn {
+    background-position: 0 -66px;
+}
+.availability-btn .x-btn-tl, 
+.availability-btn .x-btn-tr, 
+.availability-btn .x-btn-tc, 
+.availability-btn .x-btn-ml, 
+.availability-btn .x-btn-mr, 
+.availability-btn .x-btn-mc, 
+.availability-btn .x-btn-bl, 
+.availability-btn .x-btn-br, 
+.availability-btn .x-btn-bc {
+    background: transparent;
+}
+
+.pricing-btn {
+    background: url(img/availability_pricing_btns.png) no-repeat -99px 0px;
+}
+.x-btn-over.pricing-btn {
+    background-position: -99px -33px;
+}
+.x-btn-pressed.pricing-btn {
+    background-position: -99px -66px;
+}
+.pricing-btn .x-btn-tl, 
+.pricing-btn .x-btn-tr, 
+.pricing-btn .x-btn-tc, 
+.pricing-btn .x-btn-ml, 
+.pricing-btn .x-btn-mr, 
+.pricing-btn .x-btn-mc, 
+.pricing-btn .x-btn-bl, 
+.pricing-btn .x-btn-br, 
+.pricing-btn .x-btn-bc {
+    background: transparent;
+}
+
+.itemHeading {
+    font-weight: bold;
+}
+
+.rateQualifier {
+    font-weight: bold;
+}
+
+.openingHrs {
+    float: right;
+    margin-right: 10px;
+}
+
+.legendTip {
+    color: #FFFFFF;
+    width: 150px;
+    height: 175px;
+    background-color: #000000;
+    padding: 10px 10px 10px 10px;
+}
+
+.legendDescription {
+    float: right;
+}
+
+.legendTitle {
+   font-weight: bold;
+   font-size: 1.5em;
 }
