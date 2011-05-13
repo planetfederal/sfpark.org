@@ -115,6 +115,16 @@
         </java>
     </target>
 
+    <target name="debugall">
+        <java jar="${build}/ringo/run.jar" fork="true">
+            <sysproperty key="app.proxy.geoserver" value="${app.proxy.geoserver}"/>
+            <sysproperty key="ringo.home" path="${build}/ringo"/>
+            <arg value="-d"/>
+            <arg path="app/main.js"/>
+            <arg line="-p ${app.port}"/>
+        </java>
+    </target>
+
     <target name="static-war" depends="dist">
         <war destfile="${build}/${ant.project.name}.war" needxmlfile="false">
             <fileset dir="${build}/${ant.project.name}/WEB-INF/app/static"/>
