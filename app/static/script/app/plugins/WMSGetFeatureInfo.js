@@ -49,16 +49,16 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.templates = {};
         this.templates['BLOCKFACE_AVAILABILITY'] = {};
         this.templates['BLOCKFACE_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><a id="streetview" href="#">Street view</a></span><br/><span>{AVAIL_MSG}</span><br/>');
-        this.templates['BLOCKFACE_AVAILABILITY'][app.constants.PRICING] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><br/>{RATE}');
+            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{AVAIL_MSG}</span></p>');
+        this.templates['BLOCKFACE_AVAILABILITY'][app.constants.PRICING] =
+            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{RATE}</span></p>');
         this.templates['OSP_AVAILABILITY'] = {};
         this.templates['OSP_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/><span class="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}<br/></span><span>{AVAIL_MSG}</span><br/>');
+            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{AVAIL_MSG}</p>');
         this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
-            new Ext.Template('<span class="itemHeading itemHeadingStreet">{NAME}</span><br/>{RATE}');
+            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{RATE}</p>');
         this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
-        this.hourTemplate = new Ext.Template('{DAYS} {TIME}<br/>');
+        this.hourTemplate = new Ext.Template('<span>{DAYS}</span><span class="openingHrs">{TIME}</span><br/>');
     },
 
     handleGetFeatureInfo: function(evt) {
@@ -70,7 +70,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             var tpl = this.templates[featureType][this.target.mode];
             var html = tpl.applyTemplate(this.feature.attributes);
             if (rates) {
-                html += '<div class="fullDisplay"><span class="itemHeading itemHeadingRates">Rates:</span><div class="rates">';
+                html += '<p class="fullDisplay"><span class="itemHeading itemHeadingRates">Rates:</span><br/>';
                 // RS = Rate Schedule
                 for (var i=0,ii=rates.RS.length;i<ii;++i) {
                     var rate = rates.RS[i];
@@ -78,16 +78,16 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                     // RR = Rate Restriction
                     if (rate["RR"]) {
                         for (var j=0,jj=rate["RR"].length;j<jj;++j) {
-                            html += rate["RR"][j] + "<br/>";
+                            html += '&nbsp;&nbsp;' + rate["RR"][j] + "<br/>";
                         }
                     }
                 }
-                html += '</div></div>';
+                html += '</p>';
             }
             // opening hours
             var hours = Ext.decode(this.feature.attributes['OP_HRS']);
             if (hours) {
-                html += '<div class="fullDisplay"><span class="itemHeading itemHeadingHours">Hours:</span><div class="hours">';
+                html += '<p class="fullDisplay"><span class="itemHeading itemHeadingHours">Hours:</span><br/>';
                 if (hours.OPHRS instanceof Array) {
                     for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
                         var hour = hours.OPHRS[i];
@@ -96,7 +96,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                 } else {
                     html += this.hourTemplate.applyTemplate(hours.OPHRS);
                 }
-                html += '</div></div>';
+                html += '</p>';
             }
             this.displayPopup(evt, html);
         } else {
