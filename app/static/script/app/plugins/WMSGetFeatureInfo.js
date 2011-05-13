@@ -169,11 +169,9 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.streetview = true;
         var geom = this.feature.geometry.getCentroid();
         this.popup.body.update('');
-        this.popup.setSize(800, 300);
+        this.popup.setSize(800, 275);
         this.popup.add({
             xtype: "gxp_googlestreetviewpanel",
-            width: 790,
-            height: 245,
             orientation: this.getOrientationForFeature(this.feature),
             location: new OpenLayers.LonLat(geom.x, geom.y)
         });
@@ -215,6 +213,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             xtype: "gx_popup",
             expanded: false,
             autoScroll: true,
+            layout: "fit",
             resizable: false,
             plain: true,
             frame: false,
