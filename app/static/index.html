@@ -153,7 +153,23 @@
                                 }, {
                                     flex: 1,
                                     xtype: "button",
-                                    text: "refresh"
+                                    text: "refresh",
+                                    handler: function() {
+                                        var map = viewer.mapPanel.map;
+                                        for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                            var layer = map.layers[i];
+                                            if (layer instanceof OpenLayers.Layer.WMS) {
+                                                layer.redraw(true);
+                                            }
+                                        }
+                                        for (var key in viewer.tools) {
+                                            var tool = viewer.tools[key];
+                                            if (tool.ptype == "app_wmsgetfeatureinfo") {
+                                                tool.closePopup();
+                                                break;
+                                            }
+                                        }
+                                    }
                                 }
                             ]
                         }, 
