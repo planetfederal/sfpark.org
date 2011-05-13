@@ -224,7 +224,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             location: evt.xy,
             map: this.target.mapPanel,
             width: 225,
-            height: 100
+            height: 125
         });
     }
     
