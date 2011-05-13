@@ -88,3 +88,16 @@ body {
 .pricing-btn .x-btn-bc {
     background: transparent;
 }
+
+.itemHeading {
+    font-weight: bold;
+}
+
+.rateQualifier {
+    font-weight: bold;
+}
+
+.openingHrs {
+    float: right;
+    margin-right: 10px;
+}
