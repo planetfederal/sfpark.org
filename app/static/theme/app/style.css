@@ -21,6 +21,10 @@ body {
     background-color: #DDDDDD;
 }
 
+#geocoder {
+    padding-top: 5px;
+}
+
 .legend-item {
     text-align: center;
 }

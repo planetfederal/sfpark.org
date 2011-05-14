@@ -56,11 +56,12 @@ var viewer = new gxp.Viewer({
                 height: 45,
                 items: [
                     {
+                        xtype: "box",
                         width: 150,
-                        bodyCfg: {tag: "div", cls: "findHeader", html: "<h3>Find parking:</h3>"}
+                        autoEl: {tag: "div", cls: "findHeader", html: "<h3>Find parking:</h3>"}
                     }, {
+                        xtype: "container",
                         width: 270,
-                        bodyCfg: {tag: "div"},
                         id: "geocoder"
                     }, {
                         xtype: "container",
