@@ -190,12 +190,14 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     },
 
     closePopup: function() {
-        this.popup.close();
-        if (this.streetview === true) {
-            var map = this.target.mapPanel.map;
-            var geom = this.feature.geometry.getCentroid();
-            geom.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-            map.setCenter(new OpenLayers.LonLat(geom.x, geom.y));
+        if (this.popup && this.popup.expanded) {
+            this.popup.close();
+            if (this.streetview === true) {
+                var map = this.target.mapPanel.map;
+                var geom = this.feature.geometry.getCentroid();
+                geom.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
+                map.setCenter(new OpenLayers.LonLat(geom.x, geom.y));
+            }
         }
     },
 
