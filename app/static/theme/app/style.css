@@ -117,19 +117,44 @@ body {
     margin-right: 10px;
 }
 
-.legendTip {
+.x-tip .x-tip-tc, .x-tip .x-tip-tl, .x-tip .x-tip-tr, .x-tip .x-tip-bc, .x-tip .x-tip-bl, .x-tip .x-tip-br, .x-tip .x-tip-ml, .x-tip .x-tip-mr {
+    background: transparent;
+}
+
+.legend-tip {
     color: #FFFFFF;
-    width: 150px;
-    height: 175px;
     background-color: #000000;
-    padding: 10px 10px 10px 10px;
+    padding: 10px 10px 15px 10px;
 }
-
-.legendDescription {
-    float: right;
-}
-
-.legendTitle {
+.legend-tip-title {
    font-weight: bold;
-   font-size: 1.5em;
+   font-size: 17px;
 }
+.legend-tip ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 4px 0 0 20px;
+    font-size: 13px;
+}
+li.legend-avail-low {
+    background: url(img/bullet_avail_low.png) no-repeat 2px 5px;
+}
+li.legend-avail-med {
+    background: url(img/bullet_avail_med.png) no-repeat 2px 5px;
+}
+li.legend-avail-high {
+    background: url(img/bullet_avail_high.png) no-repeat 2px 5px;
+}
+li.legend-rates-low {
+    background: url(img/bullet_rates_low.png) no-repeat 2px 5px;
+}
+li.legend-rates-med {
+    background: url(img/bullet_rates_med.png) no-repeat 2px 5px;
+}
+li.legend-rates-high {
+    background: url(img/bullet_rates_high.png) no-repeat 2px 5px;
+}
+li.legend-nodata {
+    background: url(img/bullet_nodata.png) no-repeat 2px 5px;
+}
+

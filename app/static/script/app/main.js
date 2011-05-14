@@ -14,19 +14,19 @@ Ext.ns("app.constants");
 app.constants.AVAILABILITY = 0;
 app.constants.PRICING = 1;
 
-app.availabilityTip = "<div class='legendTip'><p class='legendTitle'>Availability</p>";
-app.availabilityTip += "<p><img src='theme/app/img/bullet_avail_low.png'><span class='legendDescription'>Low < 15%</span></p>";
-app.availabilityTip += "<p><img src='theme/app/img/bullet_avail_med.png'><span class='legendDescription'>Medium 15-30%</span></p>";
-app.availabilityTip += "<p><img src='theme/app/img/bullet_avail_high.png'><span class='legendDescription'>High > 30%</span></p>";
-app.availabilityTip += "<p><img src='theme/app/img/bullet_nodata.png'><span class='legendDescription'>No data</span></p>";
-app.availabilityTip += "</div>";
+app.availabilityTip = "<div class='legend-tip'><span class='legend-tip-title'>Availability</span><ul>" +
+    "<li class='legend-avail-low'>Low (&lt; 15%)</li>" +
+    "<li class='legend-avail-med'>Medium (15 - 30%)</li>" +
+    "<li class='legend-avail-high'>High (&gt; 30%)</li>" +
+    "<li class='legend-nodata'>No data</li>" +
+    "</ul></div>";
 
-app.rateTip = "<div class='legendTip'><p class='legendTitle'>Rates</p>";
-app.rateTip += "<p><img src='theme/app/img/bullet_rates_low.png'><span class='legendDescription'>$0 - $2.00/hr</span></p>";
-app.rateTip += "<p><img src='theme/app/img/bullet_rates_med.png'><span class='legendDescription'>$2.01 - $4.00/hr</span></p>";
-app.rateTip += "<p><img src='theme/app/img/bullet_rates_high.png'><span class='legendDescription'>> $4.00/hr</span></p>";
-app.rateTip += "<p><img src='theme/app/img/bullet_nodata.png'><span class='legendDescription'>No data</span></p>";
-app.rateTip += "</div>";
+app.rateTip = "<div class='legend-tip'><span class='legend-tip-title'>Rates</span><ul>" +
+    "<li class='legend-rates-low'>$0 - $2.00/hr</li>" +
+    "<li class='legend-rates-med'>$2.01 - $4.00/hr</li>" +
+    "<li class='legend-rates-high'>&gt; $4.00/hr</li>" +
+    "<li class='legend-nodata'>No data</li>" +
+    "</ul></div>";
 
 var viewer = new gxp.Viewer({
 
