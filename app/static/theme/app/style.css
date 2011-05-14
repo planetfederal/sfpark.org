@@ -17,18 +17,20 @@ body {
 }
 
 .search {
+    padding: 0 7px;
     background-color: #DDDDDD;
 }
-.legend {
-    padding: 15px 0 0 12px;
+
+.legend-item {
+    text-align: center;
 }
 
 .availability-legend {
-    background: url(img/availability_legend.png) no-repeat;
+    background: url(img/availability_legend.png) no-repeat 50% 50% transparent;
 }
 
 .pricing-legend {
-    background: url(img/pricing_legend.png) no-repeat;
+    background: url(img/pricing_legend.png) no-repeat 50% 50% transparent;
 }
 
 .findHeader {

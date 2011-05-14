@@ -53,18 +53,16 @@ var viewer = new gxp.Viewer({
                     border: false,
                     height: 35
                 },
-                height: 50,
+                height: 45,
                 items: [
                     {
                         width: 150,
-                        flex: 1,
                         bodyCfg: {tag: "div", cls: "findHeader", html: "<h3>Find parking:</h3>"}
                     }, {
-                        width: 260,
+                        width: 270,
                         bodyCfg: {tag: "div"},
                         id: "geocoder"
                     }, {
-                        flex: 1,
                         xtype: "button",
                         enableToggle: true,
                         allowDepress: false,
@@ -92,7 +90,6 @@ var viewer = new gxp.Viewer({
                             }
                         } 
                     }, {
-                        flex: 1,
                         xtype: "button",
                         enableToggle: true,
                         allowDepress: false,
@@ -119,9 +116,34 @@ var viewer = new gxp.Viewer({
                             }
                         }
                     }, {
-                        width: 200,
-                        bodyCfg: {tag: "div", qtip: app.availabilityTip, id: "legend-body", cls: "availability-legend"},
-                        id: "legend"
+                        xtype: "container",
+                        layout: "hbox",
+                        width: 260,
+                        height: 20,
+                        style: {
+                            padding: "0 10px"
+                        },
+                        items: [{
+                            xtype: "box",
+                            width: 40,
+                            html: "Low",
+                            cls: "legend-item"
+                        }, {
+                            flex: 1,
+                            border: false,
+                            bodyCfg: {
+                                tag: "div",
+                                id: "legend-body",
+                                qtip: app.availabilityTip,
+                                cls: "availability-legend",
+                                html: "&nbsp;"
+                            }
+                        }, {
+                            xtype: "box",
+                            width: 40,
+                            html: "High",
+                            cls: "legend-item"
+                        }]
                     }, {
                         xtype: "button",
                         cls: "refresh-btn",
