@@ -56,9 +56,9 @@ var viewer = new gxp.Viewer({
                 height: 50,
                 items: [
                     {
-                        width: 90,
+                        width: 150,
                         flex: 1,
-                        bodyCfg: {tag: "div", cls: "findHeader", html: "Find parking: "}
+                        bodyCfg: {tag: "div", cls: "findHeader", html: "<h3>Find parking:</h3>"}
                     }, {
                         width: 260,
                         bodyCfg: {tag: "div"},
