@@ -51,7 +51,7 @@ var viewer = new gxp.Viewer({
                 },
                 defaults: {
                     border: false,
-                    height: 35
+                    height: 33
                 },
                 height: 45,
                 items: [
@@ -63,58 +63,70 @@ var viewer = new gxp.Viewer({
                         bodyCfg: {tag: "div"},
                         id: "geocoder"
                     }, {
-                        xtype: "button",
-                        enableToggle: true,
-                        allowDepress: false,
-                        toggleGroup: "style",
-                        pressed: true,
-                        cls: "availability-btn",
-                        width: 99,
-                        height: 33,
-                        handler: function() {
-                            viewer.mode = app.constants.AVAILABILITY;
-                            Ext.get('legend-body').dom.qtip = app.availabilityTip;
-                            Ext.get('legend-body').removeClass("pricing-legend");
-                            Ext.get('legend-body').addClass("availability-legend");
-                            var map = viewer.mapPanel.map;
-                            for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                var layer = map.layers[i];
-                                if (layer instanceof OpenLayers.Layer.WMS) {
-                                    if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                        layer.mergeNewParams({"STYLES": "BLOCKFACE_AVAIL_THRESHOLD"});
-                                    }
-                                    if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
-                                        layer.mergeNewParams({"STYLES": "OSP_AVAIL_THRESHOLD"});
+                        xtype: "container",
+                        style: {
+                            padding: "0 5px 0 10px"
+                        },
+                        items: [{
+                            xtype: "button",
+                            enableToggle: true,
+                            allowDepress: false,
+                            toggleGroup: "style",
+                            pressed: true,
+                            cls: "availability-btn",
+                            width: 99,
+                            height: 33,
+                            handler: function() {
+                                viewer.mode = app.constants.AVAILABILITY;
+                                Ext.get('legend-body').dom.qtip = app.availabilityTip;
+                                Ext.get('legend-body').removeClass("pricing-legend");
+                                Ext.get('legend-body').addClass("availability-legend");
+                                var map = viewer.mapPanel.map;
+                                for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                    var layer = map.layers[i];
+                                    if (layer instanceof OpenLayers.Layer.WMS) {
+                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                            layer.mergeNewParams({"STYLES": "BLOCKFACE_AVAIL_THRESHOLD"});
+                                        }
+                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                            layer.mergeNewParams({"STYLES": "OSP_AVAIL_THRESHOLD"});
+                                        }
                                     }
                                 }
-                            }
-                        } 
+                            } 
+                        }]
                     }, {
-                        xtype: "button",
-                        enableToggle: true,
-                        allowDepress: false,
-                        toggleGroup: "style",
-                        cls: "pricing-btn",
-                        width: 73,
-                        height: 33,
-                        handler: function() {
-                            viewer.mode = app.constants.PRICING;
-                            Ext.get('legend-body').dom.qtip = app.rateTip;
-                            Ext.get('legend-body').removeClass("availability-legend");
-                            Ext.get('legend-body').addClass("pricing-legend");
-                            var map = viewer.mapPanel.map;
-                            for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                var layer = map.layers[i];
-                                if (layer instanceof OpenLayers.Layer.WMS) {
-                                    if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                        layer.mergeNewParams({"STYLES": "BLOCKFACE_RATE_THRESHOLD"});
-                                    }
-                                    if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
-                                        layer.mergeNewParams({"STYLES": "OSP_RATE_THRESHOLD"});
+                        xtype: "container",
+                        style: {
+                            padding: "0 10px 0 5px"
+                        },
+                        items: [{
+                            xtype: "button",
+                            enableToggle: true,
+                            allowDepress: false,
+                            toggleGroup: "style",
+                            cls: "pricing-btn",
+                            width: 73,
+                            height: 33,
+                            handler: function() {
+                                viewer.mode = app.constants.PRICING;
+                                Ext.get('legend-body').dom.qtip = app.rateTip;
+                                Ext.get('legend-body').removeClass("availability-legend");
+                                Ext.get('legend-body').addClass("pricing-legend");
+                                var map = viewer.mapPanel.map;
+                                for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                    var layer = map.layers[i];
+                                    if (layer instanceof OpenLayers.Layer.WMS) {
+                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                            layer.mergeNewParams({"STYLES": "BLOCKFACE_RATE_THRESHOLD"});
+                                        }
+                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
+                                            layer.mergeNewParams({"STYLES": "OSP_RATE_THRESHOLD"});
+                                        }
                                     }
                                 }
                             }
-                        }
+                        }]
                     }, {
                         xtype: "container",
                         layout: "hbox",
