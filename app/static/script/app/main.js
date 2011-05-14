@@ -50,9 +50,8 @@ var viewer = new gxp.Viewer({
                     align: "middle"
                 },
                 defaults: {
-                    cls: "search-item", 
                     border: false,
-                    height: 40
+                    height: 35
                 },
                 height: 50,
                 items: [
@@ -124,9 +123,10 @@ var viewer = new gxp.Viewer({
                         bodyCfg: {tag: "div", qtip: app.availabilityTip, id: "legend-body", cls: "availability-legend"},
                         id: "legend"
                     }, {
-                        flex: 1,
                         xtype: "button",
-                        text: "refresh",
+                        cls: "refresh-btn",
+                        width: 20,
+                        height: 20,
                         handler: function() {
                             var map = viewer.mapPanel.map;
                             for (var i=0,ii=map.layers.length;i<ii;++i) {

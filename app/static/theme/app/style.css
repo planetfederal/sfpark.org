@@ -19,9 +19,6 @@ body {
 .search {
     background-color: #DDDDDD;
 }
-.search-item {
-    padding-top: 5px;
-}
 .legend {
     padding: 15px 0 0 12px;
 }
@@ -86,6 +83,24 @@ body {
 .pricing-btn .x-btn-bl, 
 .pricing-btn .x-btn-br, 
 .pricing-btn .x-btn-bc {
+    background: transparent;
+}
+
+.refresh-btn {
+    background: url(img/button_refresh.png) no-repeat 0px 0px;
+}
+.x-btn-over.refresh-btn {
+    background-position: 0px -20px;
+}
+.refresh-btn .x-btn-tl, 
+.refresh-btn .x-btn-tr, 
+.refresh-btn .x-btn-tc, 
+.refresh-btn .x-btn-ml, 
+.refresh-btn .x-btn-mr, 
+.refresh-btn .x-btn-mc, 
+.refresh-btn .x-btn-bl, 
+.refresh-btn .x-btn-br, 
+.refresh-btn .x-btn-bc {
     background: transparent;
 }
 
