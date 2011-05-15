@@ -91,6 +91,9 @@ body {
 .refresh-btn {
     background: url(img/button_refresh.png) no-repeat 0px 0px;
 }
+.refresh-btn button {
+    width: 20px;
+}
 .x-btn-over.refresh-btn {
     background-position: 0px -20px;
 }
@@ -115,9 +118,11 @@ body {
     background-color: #000000;
     padding: 10px 10px 15px 10px;
 }
-.legend-tip-title {
-   font-weight: bold;
-   font-size: 17px;
+.legend-tip h4 {
+    color: #FFFFFF;
+    font-weight: bold;
+    font-size: 17px;
+    margin-bottom: 5px;
 }
 .legend-tip ul li {
     list-style-type: none;

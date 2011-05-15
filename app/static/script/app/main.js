@@ -10,22 +10,46 @@ OpenLayers.ImgPath = "externals/openlayers/img/";
 OpenLayers.ProxyHost = "proxy/?url=";
 OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
-app.availabilityTip = "<div class='legend-tip'><span class='legend-tip-title'>Availability</span><ul>" +
+app.availabilityTip = "<div class='legend-tip'><h4>Availability</h4><ul>" +
     "<li class='legend-avail-low'>Low (&lt; 15%)</li>" +
     "<li class='legend-avail-med'>Medium (15 - 30%)</li>" +
     "<li class='legend-avail-high'>High (&gt; 30%)</li>" +
     "<li class='legend-nodata'>No data</li>" +
     "</ul></div>";
 
-app.rateTip = "<div class='legend-tip'><span class='legend-tip-title'>Rates</span><ul>" +
+app.rateTip = "<div class='legend-tip'><h4>Rates</h4><ul>" +
     "<li class='legend-rates-low'>$0 - $2.00/hr</li>" +
     "<li class='legend-rates-med'>$2.01 - $4.00/hr</li>" +
     "<li class='legend-rates-high'>&gt; $4.00/hr</li>" +
     "<li class='legend-nodata'>No data</li>" +
     "</ul></div>";
 
-var viewer = new gxp.Viewer({
+app.refreshTipTemplate = new Ext.Template(
+    "<div class='legend-tip'><h4>Refresh</h4>",
+    "Rates and availability<br>as of {time}."
+);
 
+app.getFormattedTime = function() {
+    var date = new Date();
+    var hours = date.getHours()
+    var minutes = date.getMinutes()
+    var suffix = "AM";
+    if (hours >= 12) {
+        suffix = "PM";
+        hours -= 12;
+    }
+    if (hours == 0) {
+        hours = 12;
+    }
+    if (minutes < 10) {
+        minutes = "0" + minutes;
+    }
+    return hours + ":" + minutes + " " + suffix;
+};
+
+
+var viewer = new gxp.Viewer({
+    
     mode: "availability",
     portalConfig: {
         renderTo: "mapportal",
@@ -90,7 +114,7 @@ var viewer = new gxp.Viewer({
                                         }
                                     }
                                 }
-                            } 
+                            }
                         }]
                     }, {
                         xtype: "container",
@@ -156,9 +180,10 @@ var viewer = new gxp.Viewer({
                     }, {
                         xtype: "button",
                         cls: "refresh-btn",
+                        id: "refresh-btn",
                         width: 20,
                         height: 20,
-                        handler: function() {
+                        handler: function(cmp) {
                             var map = viewer.mapPanel.map;
                             for (var i=0,ii=map.layers.length;i<ii;++i) {
                                 var layer = map.layers[i];
@@ -166,12 +191,35 @@ var viewer = new gxp.Viewer({
                                     layer.redraw(true);
                                 }
                             }
-                            for (var key in viewer.tools) {
-                                var tool = viewer.tools[key];
+                            for (var key in this.tools) {
+                                var tool = this.tools[key];
                                 if (tool.ptype == "app_wmsgetfeatureinfo") {
-                                    tool.closePopup();
+                                    if (tool.popup) {
+                                        tool.popup.close();
+                                    }
                                     break;
                                 }
+                            }
+                            cmp.dynamicTip.destroy();
+                            cmp.dynamicTip = new Ext.ToolTip({
+                                target: "refresh-btn",
+                                html: app.refreshTipTemplate.applyTemplate({
+                                    mode: viewer.mode,
+                                    time: app.getFormattedTime()
+                                })
+                            });
+                        },
+                        listeners: {
+                            render: function(cmp) {
+                                // TODO: This looks neccessary in order to update the tip.
+                                // Find a better alternative if possible.
+                                cmp.dynamicTip = new Ext.ToolTip({
+                                    target: "refresh-btn",
+                                    html: app.refreshTipTemplate.applyTemplate({
+                                        mode: viewer.mode,
+                                        time: app.getFormattedTime()
+                                    })
+                                });
                             }
                         }
                     }
