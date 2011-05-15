@@ -217,9 +217,10 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             autoScroll: true,
             layout: "fit",
             resizable: false,
-            plain: true,
-            frame: false,
-            bodyCfg: {tag: 'div', cls: 'x-panel-body sfpopup', html: text},
+            items: [{
+                xtype: "box",
+                html: text
+            }],
             closable: false,
             unpinnable: false,
             tbar: ['->', {text: "+", handler: this.expandInfo, scope: this}, {text: "X", hidden: true, handler: this.closePopup, scope: this}],
