@@ -12,12 +12,16 @@ app.plugins.PilotAreas = Ext.extend(gxp.plugins.Tool, {
             featureType: this.featureType,
             featureNS: this.featureNS,
             srsName: target.mapPanel.map.projection,
-            fields: [{name: this.displayField}]
+            fields: [{name: this.displayField}],
+            autoLoad: true
         });
 
         var combo = new Ext.form.ComboBox(Ext.apply({
             store: store,
             triggerAction: 'all',
+            mode: "local",
+            forceSelection: true,
+            typeAhead: true,
             displayField: this.displayField,
             listeners: {
                 select: this.onComboSelect,
