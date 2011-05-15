@@ -68,7 +68,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             ),
             availability: new Ext.Template(
                 '<h4>{NAME}</h4>',
-                '<div="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
+                '<div class="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
                 '{PHONE}</div><p>{AVAIL_MSG}</p>'
             )
         }
@@ -214,7 +214,8 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         }, this);
         this.popup.getTopToolbar().items.get(1).hide();
         this.popup.getTopToolbar().items.get(2).show();
-        this.popup.setSize(300, 200);
+        this.popup.syncSize();
+        this.popup.setHeight(200);
     },
 
     closePopup: function() {
