@@ -229,7 +229,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         }
         // wouldn't it be nice if this worked?
         // this.popup.syncSize();
-        // TODO: unhack this - it won't likely work on IE
+        // TODO: unhack this
         var frameWidth = this.popup.getFrameWidth() * 2;
         var frameHeight = this.popup.getFrameHeight() * 2;
         var dom = this.popup.items.get(0).el.dom;
