@@ -44,22 +44,37 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
      *  parameters in the requests (e.g. {buffer: 10}).
      */
 
-    constructor: function(config) {
-        app.plugins.WMSGetFeatureInfo.superclass.constructor.apply(this, arguments);
-        this.templates = {};
-        this.templates['BLOCKFACE_AVAILABILITY'] = {};
-        this.templates['BLOCKFACE_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{AVAIL_MSG}</span></p>');
-        this.templates['BLOCKFACE_AVAILABILITY'][app.constants.PRICING] =
-            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{RATE}</span></p>');
-        this.templates['OSP_AVAILABILITY'] = {};
-        this.templates['OSP_AVAILABILITY'][app.constants.AVAILABILITY] = 
-            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{AVAIL_MSG}</p>');
-        this.templates['OSP_AVAILABILITY'][app.constants.PRICING] = 
-            new Ext.Template('<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{RATE}</p>');
-        this.rateTemplate = new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>');
-        this.hourTemplate = new Ext.Template('<span>{DAYS}</span><span class="openingHrs">{TIME}</span><br/>');
+    /** private: templates
+     *  Templates for each feature type and for each mode.
+     */
+    templates: {
+        BLOCKFACE_AVAILABILITY: {
+            pricing: new Ext.Template(
+                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{RATE}</span></p>'
+            ),
+            availability: new Ext.Template(
+                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{AVAIL_MSG}</span></p>'
+            )
+        },
+        OSP_AVAILABILITY: {
+            pricing: new Ext.Template(
+                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{RATE}</p>'
+            ),
+            availability: new Ext.Template(
+                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{AVAIL_MSG}</p>'
+            )
+        }
     },
+    
+    /** private: rateTemplate
+     *  Rate template.
+     */
+    rateTemplate: new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>'),
+    
+    /** private: hourTemplate
+     *  Hour template.
+     */
+    hourTemplate: new Ext.Template('<span>{DAYS}</span><span class="openingHrs">{TIME}</span><br/>'),
 
     handleGetFeatureInfo: function(evt) {
         if (evt.features && evt.features.length > 0) {

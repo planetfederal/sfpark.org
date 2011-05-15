@@ -10,10 +10,6 @@ OpenLayers.ImgPath = "externals/openlayers/img/";
 OpenLayers.ProxyHost = "proxy/?url=";
 OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
-Ext.ns("app.constants");
-app.constants.AVAILABILITY = 0;
-app.constants.PRICING = 1;
-
 app.availabilityTip = "<div class='legend-tip'><span class='legend-tip-title'>Availability</span><ul>" +
     "<li class='legend-avail-low'>Low (&lt; 15%)</li>" +
     "<li class='legend-avail-med'>Medium (15 - 30%)</li>" +
@@ -30,7 +26,7 @@ app.rateTip = "<div class='legend-tip'><span class='legend-tip-title'>Rates</spa
 
 var viewer = new gxp.Viewer({
 
-    mode: app.constants.AVAILABILITY,
+    mode: "availability",
     portalConfig: {
         renderTo: "mapportal",
         border: false, 
@@ -78,7 +74,7 @@ var viewer = new gxp.Viewer({
                             width: 99,
                             height: 33,
                             handler: function() {
-                                viewer.mode = app.constants.AVAILABILITY;
+                                viewer.mode = "availability";
                                 Ext.get('legend-body').dom.qtip = app.availabilityTip;
                                 Ext.get('legend-body').removeClass("pricing-legend");
                                 Ext.get('legend-body').addClass("availability-legend");
@@ -110,7 +106,7 @@ var viewer = new gxp.Viewer({
                             width: 73,
                             height: 33,
                             handler: function() {
-                                viewer.mode = app.constants.PRICING;
+                                viewer.mode = "pricing";
                                 Ext.get('legend-body').dom.qtip = app.rateTip;
                                 Ext.get('legend-body').removeClass("availability-legend");
                                 Ext.get('legend-body').addClass("pricing-legend");
