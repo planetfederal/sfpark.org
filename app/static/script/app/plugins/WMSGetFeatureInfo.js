@@ -234,6 +234,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             resizable: false,
             items: [{
                 xtype: "box",
+                cls: "popup-content",
                 html: text
             }],
             closable: false,
