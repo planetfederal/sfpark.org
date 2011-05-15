@@ -212,25 +212,28 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     expandInfo: function() {
         this.popup.expanded = true;
         Ext.select('.fullDisplay').toggleClass('fullDisplay');
-        Ext.get('streetview') && Ext.get('streetview').on("click", function() {
-            this.showStreetView();
-        }, this);
-        this.popup.getTopToolbar().items.get(1).hide();
-        this.popup.getTopToolbar().items.get(2).show();
-        this.popup.syncSize();
-        this.popup.setHeight(200);
-    },
-
-    closePopup: function() {
-        if (this.popup && this.popup.expanded) {
-            this.popup.close();
-            if (this.streetview === true) {
-                var map = this.target.mapPanel.map;
-                var geom = this.feature.geometry.getCentroid();
-                geom.transform(new OpenLayers.Projection("EPSG:4326"), map.getProjectionObject());
-                map.setCenter(new OpenLayers.LonLat(geom.x, geom.y));
-            }
+        this.popup.doLayout();
+        var el = Ext.get("streetview");
+        if (el) {
+            el.on("click", function() {
+                this.showStreetView();
+            }, this);
         }
+        // wouldn't it be nice if this worked?
+        // this.popup.syncSize();
+        // TODO: unhack this - it won't likely work on IE
+        var frameWidth = this.popup.getFrameWidth() * 2;
+        var frameHeight = this.popup.getFrameHeight() * 2;
+        var dom = this.popup.items.get(0).el.dom;
+        var width = dom.scrollWidth + frameWidth;
+        var targetHeight = dom.scrollHeight + frameHeight;
+        var height = Math.min(targetHeight, 275);
+        if (targetHeight > height) {
+            // get rid of horizontal scrollbar
+            width += 12;
+        }
+        this.popup.setSize(width, height);
+        this.popup.panIntoView();
     },
 
     /** private: method[displayPopup]
@@ -246,19 +249,33 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.popup = this.addOutput({
             xtype: "gx_popup",
             expanded: false,
-            autoScroll: true,
             layout: "fit",
             resizable: false,
             items: [{
                 xtype: "box",
+                autoScroll: true,
                 cls: "popup-content",
                 html: text
             }],
-            closable: false,
+            closable: true,
             unpinnable: false,
-            tbar: ['->', {text: "+", handler: this.expandInfo, scope: this}, {text: "X", hidden: true, handler: this.closePopup, scope: this}],
             location: evt.xy,
-            map: this.target.mapPanel
+            map: this.target.mapPanel,
+            listeners: {
+                close: function(popup) {
+                    if (this.streetview) {
+                        this.target.mapPanel.map.setCenter(popup.location);
+                    }
+                },
+                scope: this
+            }
+        });
+        Ext.select("a.popup-more").on({
+            click: function(event, el) {
+                Ext.get(el).hide();
+                this.expandInfo();
+            },
+            scope: this
         });
     }
     

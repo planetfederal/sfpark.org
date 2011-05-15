@@ -106,15 +106,6 @@ body {
     background: transparent;
 }
 
-.rateQualifier {
-    font-weight: bold;
-}
-
-.openingHrs {
-    float: right;
-    margin-right: 10px;
-}
-
 .x-tip .x-tip-tc, .x-tip .x-tip-tl, .x-tip .x-tip-tr, .x-tip .x-tip-bc, .x-tip .x-tip-bl, .x-tip .x-tip-br, .x-tip .x-tip-ml, .x-tip .x-tip-mr {
     background: transparent;
 }
@@ -157,12 +148,43 @@ li.legend-nodata {
 }
 
 /* popups */
-
+.popup-content {
+    padding-left: 5px;
+}
 .popup-content h4 {
+    white-space: nowrap;
+    font-size: 15px;
+    margin-bottom: 5px;
+}
+.popup-content h5 {
+    font-size: 13px;
     font-weight: bold;
+    margin-bottom: 0;
 }
 .popup-content p {
-    padding-top: 5px;
+    margin: 5px 0;
+}
+.popup-content table {
+    margin-bottom: 5px;
+}
+.popup-content td {
+    white-space: nowrap;
+    padding: 0 5px;
+}
+.popup-content td.rate-restriction {
+    font-size: 10px;
+    font-style: italic;
+    text-align: right;
+}
+a.popup-more {
+    display: inline-block;
+    cursor: pointer;
+    width: 30px;
+    padding: 5px 0 0 5px;
+    background: url(img/button_plus.png) no-repeat 5px 0;
+}
+a.popup-more:hover {
+    text-decoration: none;
 }
 
 .x-window-ml {
