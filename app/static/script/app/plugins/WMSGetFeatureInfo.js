@@ -254,9 +254,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             unpinnable: false,
             tbar: ['->', {text: "+", handler: this.expandInfo, scope: this}, {text: "X", hidden: true, handler: this.closePopup, scope: this}],
             location: evt.xy,
-            map: this.target.mapPanel,
-            width: 250,
-            height: 125
+            map: this.target.mapPanel
         });
     }
     
