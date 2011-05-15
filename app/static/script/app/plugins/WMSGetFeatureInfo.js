@@ -219,6 +219,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     expandInfo: function() {
         this.popup.expanded = true;
         Ext.select('.fullDisplay').toggleClass('fullDisplay');
+        Ext.select('.popup-minimal').removeClass('popup-minimal');
         this.popup.doLayout();
         var el = Ext.get("streetview");
         if (el) {
@@ -255,6 +256,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.streetview = false;
         this.popup = this.addOutput({
             xtype: "gx_popup",
+            cls: "popup-minimal",
             expanded: false,
             layout: "fit",
             resizable: false,

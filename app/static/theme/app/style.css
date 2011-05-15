@@ -153,6 +153,9 @@ li.legend-nodata {
 }
 
 /* popups */
+.popup-minimal .x-tool-close {
+    display: none;
+}
 .popup-content {
     padding-left: 5px;
 }
