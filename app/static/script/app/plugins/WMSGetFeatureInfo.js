@@ -49,84 +49,87 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
      */
     templates: {
         BLOCKFACE_AVAILABILITY: {
-            pricing: new Ext.Template(
-                '<h4>{STREET_NAME} ({ADDR_RANGE})</h4>',
-                '<div class="fullDisplay"><a id="streetview" href="#">Street view</a></div>',
-                '<p>{RATE}</p>'
+            pricing: new Ext.XTemplate(
+                '<h4>{values.attributes.STREET_NAME} ({values.attributes.ADDR_RANGE})<a class="popup-more">&nbsp;</a></h4>',
+                '<div class="fullDisplay"><a id="streetview">Street view</a></div>',
+                '<p>{values.attributes.RATE}</p>',
+                '<div class="fullDisplay"><h5>Rates</h5>',
+                    '<table><tpl for="values.rates.RS">',
+                        '<tr><td>{DESC}</td><td>{RATE}</td></tr>',
+                    '</tpl></table>',
+                '</div>'
             ),
-            availability: new Ext.Template(
-                '<h4>{STREET_NAME} ({ADDR_RANGE})</h4>',
-                '<div class="fullDisplay"><a id="streetview" href="#">Street view</a></div>',
-                '<p>{AVAIL_MSG}</p>'
+            availability: new Ext.XTemplate(
+                '<h4>{values.attributes.STREET_NAME} ({values.attributes.ADDR_RANGE})<a class="popup-more">&nbsp;</a></h4>',
+                '<div class="fullDisplay"><a id="streetview">Street view</a></div>',
+                '<p>{values.attributes.AVAIL_MSG}</p>',
+                '<div class="fullDisplay"><h5>Rates</h5>',
+                    '<table><tpl for="values.rates.RS">',
+                        '<tr><td>{DESC}</td><td>{RATE}</td></tr>',
+                    '</tpl></table>',
+                '</div>'
             )
         },
         OSP_AVAILABILITY: {
-            pricing: new Ext.Template(
-                '<h4>{NAME}</h4>',
-                '<div class="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
-                '{PHONE}</div><p>{RATE}</p>'
+            pricing: new Ext.XTemplate(
+                '<h4>{values.attributes.NAME}<a class="popup-more">&nbsp;</a></h4>',
+                '<div class="fullDisplay">{values.attributes.ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
+                '{values.attributes.PHONE}</div><p>{values.attributes.RATE}</p>',
+                '<div class="fullDisplay"><h5>Rates</h5>',
+                    '<table><tpl for="values.rates.RS">',
+                        '<tr><td>{DESC}</td><td>{RATE}</td></tr>',
+                        '<tpl if="RR.length"><tpl for="RR">',
+                        '<tr><td colspan="2" class="rate-restriction">{.}</td></tr>',
+                        '</tpl></tpl>',
+                    '</tpl></table>',
+                '</div>',
+                '<tpl if="values.hours">',
+                    '<div class="fullDisplay"><h5>Hours</h5>',
+                        '<table><tpl for="values.hours.OPHRS">',
+                            '<tr><td>{DAYS}</td><td>{TIME}</td></tr>',
+                        '</tpl><table>',
+                    '</div>',
+                '</tpl>'
             ),
-            availability: new Ext.Template(
-                '<h4>{NAME}</h4>',
-                '<div class="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
-                '{PHONE}</div><p>{AVAIL_MSG}</p>'
+            availability: new Ext.XTemplate(
+                '<h4>{values.attributes.NAME}<a class="popup-more">&nbsp;</a></h4>',
+                '<div class="fullDisplay">{values.attributes.ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
+                '{values.attributes.PHONE}</div><p>{values.attributes.AVAIL_MSG}</p>',
+                '<div class="fullDisplay"><h5>Rates</h5>',
+                    '<table><tpl for="values.rates.RS">',
+                        '<tr><td>{DESC}</td><td>{RATE}</td></tr>',
+                        '<tpl if="RR.length"><tpl for="RR">',
+                        '<tr><td colspan="2" class="rate-restriction">{.}</td></tr>',
+                        '</tpl></tpl>',
+                    '</tpl></table>',
+                '</div>',
+                '<tpl if="values.hours">',
+                    '<div class="fullDisplay"><h5>Hours</h5>',
+                        '<table><tpl for="values.hours.OPHRS">',
+                            '<tr><td>{DAYS}</td><td>{TIME}</td></tr>',
+                        '</tpl><table>',
+                    '</div>',
+                '</tpl>'
             )
         }
     },
     
-    /** private: rateTemplate
-     *  Rate template.
-     */
-    rateTemplate: new Ext.Template(
-        '<span class="rateTimes">{TIME}{DESC}</span>',
-        '<span class="rateQualifier">{RATE}</span><br/>'
-    ),
-    
-    /** private: hourTemplate
-     *  Hour template.
-     */
-    hourTemplate: new Ext.Template(
-        '<span>{DAYS}</span><span class="openingHrs">{TIME}</span><br/>'
-    ),
-
     handleGetFeatureInfo: function(evt) {
         if (evt.features && evt.features.length > 0) {
             this.feature = evt.features[0];
-            var rates = null;
-            rates = Ext.decode(this.feature.attributes['RATE_SCHED']);
+            var attributes = this.feature.attributes;
             var featureType = this.feature.gml.featureType;
             var tpl = this.templates[featureType][this.target.mode];
-            var html = tpl.applyTemplate(this.feature.attributes);
-            if (rates) {
-                html += '<p class="fullDisplay"><span class="itemHeading itemHeadingRates">Rates:</span><br/>';
-                // RS = Rate Schedule
-                for (var i=0,ii=rates.RS.length;i<ii;++i) {
-                    var rate = rates.RS[i];
-                    html += this.rateTemplate.applyTemplate(rate);
-                    // RR = Rate Restriction
-                    if (rate["RR"]) {
-                        for (var j=0,jj=rate["RR"].length;j<jj;++j) {
-                            html += '&nbsp;&nbsp;' + rate["RR"][j] + "<br/>";
-                        }
-                    }
-                }
-                html += '</p>';
-            }
-            // opening hours
             var hours = Ext.decode(this.feature.attributes['OP_HRS']);
-            if (hours) {
-                html += '<p class="fullDisplay"><span class="itemHeading itemHeadingHours">Hours:</span><br/>';
-                if (hours.OPHRS instanceof Array) {
-                    for (var i=0,ii=hours.OPHRS.length;i<ii;++i) {
-                        var hour = hours.OPHRS[i];
-                        html += this.hourTemplate.applyTemplate(hour);
-                    }
-                } else {
-                    html += this.hourTemplate.applyTemplate(hours.OPHRS);
-                }
-                html += '</p>';
+            // TODO: have them always provide an array
+            if (hours && !(hours.OPHRS instanceof Array)) {
+                hours.OPHRS = [hours.OPHRS];
             }
-            this.displayPopup(evt, html);
+            this.displayPopup(evt, tpl.applyTemplate({
+                attributes: attributes,
+                rates: Ext.decode(attributes['RATE_SCHED']),
+                hours: hours
+            }));
         } else {
             if (this.popup && this.popup.expanded === false) {
                 this.popup.close();
