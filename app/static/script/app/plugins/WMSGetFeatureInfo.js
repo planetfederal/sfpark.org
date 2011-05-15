@@ -166,6 +166,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                 vendorParams: this.vendorParams,
                 eventListeners: {
                     getfeatureinfo: this.handleGetFeatureInfo,
+                    beforegetfeatureinfo: this.beforeGetFeatureInfo,
                     scope: this
                 }
             });
@@ -194,6 +195,12 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             }
         }
         return orientation;
+    },
+    
+    beforeGetFeatureInfo: function() {
+        if (this.popup) {
+            this.popup.close();
+        }
     },
 
     showStreetView: function() {
