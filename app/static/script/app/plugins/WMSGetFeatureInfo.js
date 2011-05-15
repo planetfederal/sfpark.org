@@ -168,7 +168,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     showStreetView: function() {
         this.streetview = true;
         var geom = this.feature.geometry.getCentroid();
-        this.popup.body.update('');
+        this.popup.items.clear();
         this.popup.setSize(800, 275);
         this.popup.add({
             xtype: "gxp_googlestreetviewpanel",
