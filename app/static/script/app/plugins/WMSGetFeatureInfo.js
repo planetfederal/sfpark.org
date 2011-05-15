@@ -50,18 +50,26 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     templates: {
         BLOCKFACE_AVAILABILITY: {
             pricing: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{RATE}</span></p>'
+                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span>',
+                '<span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p>',
+                '<p><span>{RATE}</span></p>'
             ),
             availability: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span><span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p><p><span>{AVAIL_MSG}</span></p>'
+                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span>',
+                '<span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p>',
+                '<p><span>{AVAIL_MSG}</span></p>'
             )
         },
         OSP_AVAILABILITY: {
             pricing: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{RATE}</p>'
+                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span>',
+                '<span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span>',
+                '<span class="fullDisplay">{PHONE}</span></p><p>{RATE}</p>'
             ),
             availability: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span><span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span><span class="fullDisplay">{PHONE}</span></p><p>{AVAIL_MSG}</p>'
+                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span>',
+                '<span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span>',
+                '<span class="fullDisplay">{PHONE}</span></p><p>{AVAIL_MSG}</p>'
             )
         }
     },
@@ -69,12 +77,17 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     /** private: rateTemplate
      *  Rate template.
      */
-    rateTemplate: new Ext.Template('<span class="rateTimes">{TIME}{DESC}</span> <span class="rateQualifier">{RATE}</span><br/>'),
+    rateTemplate: new Ext.Template(
+        '<span class="rateTimes">{TIME}{DESC}</span>',
+        '<span class="rateQualifier">{RATE}</span><br/>'
+    ),
     
     /** private: hourTemplate
      *  Hour template.
      */
-    hourTemplate: new Ext.Template('<span>{DAYS}</span><span class="openingHrs">{TIME}</span><br/>'),
+    hourTemplate: new Ext.Template(
+        '<span>{DAYS}</span><span class="openingHrs">{TIME}</span><br/>'
+    ),
 
     handleGetFeatureInfo: function(evt) {
         if (evt.features && evt.features.length > 0) {
