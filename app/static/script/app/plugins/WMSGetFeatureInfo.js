@@ -55,7 +55,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                 '<p>{values.attributes.RATE}</p>',
                 '<div class="fullDisplay"><h5>Rates</h5>',
                     '<table><tpl for="values.rates.RS">',
-                        '<tr><td>{DESC}</td><td>{RATE}</td></tr>',
+                        '<tr><td>{TIME}</td><td>{RATE}</td></tr>',
                     '</tpl></table>',
                 '</div>'
             ),
@@ -65,7 +65,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                 '<p>{values.attributes.AVAIL_MSG}</p>',
                 '<div class="fullDisplay"><h5>Rates</h5>',
                     '<table><tpl for="values.rates.RS">',
-                        '<tr><td>{DESC}</td><td>{RATE}</td></tr>',
+                        '<tr><td>{TIME}</td><td>{RATE}</td></tr>',
                     '</tpl></table>',
                 '</div>'
             )
