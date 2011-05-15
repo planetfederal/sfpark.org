@@ -50,26 +50,26 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     templates: {
         BLOCKFACE_AVAILABILITY: {
             pricing: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span>',
-                '<span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p>',
-                '<p><span>{RATE}</span></p>'
+                '<h4>{STREET_NAME} ({ADDR_RANGE})</h4>',
+                '<div class="fullDisplay"><a id="streetview" href="#">Street view</a></div>',
+                '<p>{RATE}</p>'
             ),
             availability: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{STREET_NAME} ({ADDR_RANGE})</span>',
-                '<span class="fullDisplay"><br/><a id="streetview" href="#">Street view</a><br/></span></p>',
-                '<p><span>{AVAIL_MSG}</span></p>'
+                '<h4>{STREET_NAME} ({ADDR_RANGE})</h4>',
+                '<div class="fullDisplay"><a id="streetview" href="#">Street view</a></div>',
+                '<p>{AVAIL_MSG}</p>'
             )
         },
         OSP_AVAILABILITY: {
             pricing: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span>',
-                '<span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span>',
-                '<span class="fullDisplay">{PHONE}</span></p><p>{RATE}</p>'
+                '<h4>{NAME}</h4>',
+                '<div class="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
+                '{PHONE}</div><p>{RATE}</p>'
             ),
             availability: new Ext.Template(
-                '<p><span class="itemHeading itemHeadingStreet">{NAME}</span>',
-                '<span class="fullDisplay"><br/>{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br/></span>',
-                '<span class="fullDisplay">{PHONE}</span></p><p>{AVAIL_MSG}</p>'
+                '<h4>{NAME}</h4>',
+                '<div="fullDisplay">{ADDRESS} (<a id="streetview" href="#">Street view</a>)<br>',
+                '{PHONE}</div><p>{AVAIL_MSG}</p>'
             )
         }
     },

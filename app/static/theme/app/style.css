@@ -106,10 +106,6 @@ body {
     background: transparent;
 }
 
-.itemHeading {
-    font-weight: bold;
-}
-
 .rateQualifier {
     font-weight: bold;
 }
@@ -162,10 +158,17 @@ li.legend-nodata {
 
 /* popups */
 
-.x-window-ml {  
+.popup-content h4 {
+    font-weight: bold;
+}
+.popup-content p {
+    padding-top: 5px;
+}
+
+.x-window-ml {
     background-color: #e1e3e4;
 }
-.x-window-mc {  
+.x-window-mc {
     background-color: #e1e3e4;
     border-width: 0px;  
 }
