@@ -226,5 +226,6 @@ a.popup-more:hover {
     background-image: url("img/right-corners.png");
 }
 .gx-popup-anc {
+    top: -2px;
     background-image: url("img/anchor.png");
 }
