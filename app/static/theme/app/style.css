@@ -68,13 +68,13 @@ body {
 }
 
 .pricing-btn {
-    background: url(img/availability_pricing_btns.png) no-repeat -99px 0px;
+    background: url(img/availability_pricing_btns.png) no-repeat -100px 0px;
 }
 .x-btn-over.pricing-btn {
-    background-position: -99px -33px;
+    background-position: -100px -39px;
 }
 .x-btn-pressed.pricing-btn {
-    background-position: -99px -66px;
+    background-position: -100px -78px;
 }
 .pricing-btn .x-btn-tl, 
 .pricing-btn .x-btn-tr, 
