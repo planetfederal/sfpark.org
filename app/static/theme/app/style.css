@@ -50,10 +50,10 @@ body {
     background: url(img/availability_pricing_btns.png) no-repeat 0px 0px;
 }
 .x-btn-over.availability-btn {
-    background-position: 0px -33px;
+    background-position: 0px -39px;
 }
 .x-btn-pressed.availability-btn {
-    background-position: 0 -66px;
+    background-position: 0 -78px;
 }
 .availability-btn .x-btn-tl, 
 .availability-btn .x-btn-tr, 
