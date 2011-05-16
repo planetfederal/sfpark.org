@@ -1,13 +1,11 @@
-# Ready GXP
+# sfpark.org
 
-The intention of this project is to provide a simple reusable template for 
-GeoExt applications bound for a servlet container.
+The intention of this project is to provide rewrite of the mapping functionality on sfpark.org.
 
 ## Setup
 
-    curl https://github.com/opengeo/readygxp/raw/master/readygxp.sh | sh -s myapp
+    git checkout git://github.com/opengeo/sfpark.org.git
 
-Enhancements to come later.  For now, an application can be run as follows:
 
 ## Debug Mode
 
@@ -24,6 +22,6 @@ change).
 
 To create a servlet run the following:
 
-    ant
+    ant static-war
 
 The servlet will be assembled in the build directory.
