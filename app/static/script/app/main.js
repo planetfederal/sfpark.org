@@ -31,14 +31,14 @@ app.refreshTipTemplate = new Ext.Template(
 
 app.getFormattedTime = function() {
     var date = new Date();
-    var hours = date.getHours()
-    var minutes = date.getMinutes()
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
     var suffix = "AM";
     if (hours >= 12) {
         suffix = "PM";
         hours -= 12;
     }
-    if (hours == 0) {
+    if (hours === 0) {
         hours = 12;
     }
     if (minutes < 10) {
