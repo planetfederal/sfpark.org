@@ -208,6 +208,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         this.popup.setSize(800, 275);
         this.popup.add({
             xtype: "gxp_googlestreetviewpanel",
+            zoom: 1,
             orientation: this.getOrientationForFeature(this.feature),
             location: new OpenLayers.LonLat(geom.x, geom.y)
         });
