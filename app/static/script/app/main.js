@@ -261,6 +261,7 @@ var viewer = new gxp.Viewer({
         border: false,
         projection: "EPSG:900913",
         units: "m",
+        panMethod: null,
         numZoomLevels: 21,
         maxResolution: 156543.03390625,
         maxExtent: [
