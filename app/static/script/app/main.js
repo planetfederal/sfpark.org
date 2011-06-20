@@ -55,7 +55,7 @@ var viewer = new gxp.Viewer({
         renderTo: "mapportal",
         border: false, 
         width: 940, 
-        height: 400,
+        height: 494,
         region: "center"
     },
     portalItems: [{
@@ -258,7 +258,7 @@ var viewer = new gxp.Viewer({
     ],
     map: {
         id: "map", 
-        height: 300,
+        height: 449,
         border: false,
         projection: "EPSG:900913",
         units: "m",

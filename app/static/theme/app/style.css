@@ -4,6 +4,18 @@ body {
     font-family:helvetica,tahoma,verdana,sans-serif;
 }
 
+/* this is defined in http://sfpark.org/wp-content/themes/sfpark/style.css 
+ * see https://github.com/opengeo/sfpark.org/issues/15 */
+.scrollable {
+    height: 498px;
+}
+
+/* this is defined in http://sfpark.org/wp-content/themes/sfpark/style.css 
+ * see https://github.com/opengeo/sfpark.org/issues/15 */
+#items .panel {
+    height: 498px;
+}
+
 /* don't wrap lines on any tooltips */
 .x-tip {
     white-space: nowrap;
