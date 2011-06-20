@@ -62,7 +62,7 @@ var viewer = new gxp.Viewer({
         region: "center",
         xtype: "container",
         items: [
-            {
+            "map", {
                 xtype: "container",
                 layout: "hbox",
                 cls: "search", 
@@ -224,8 +224,7 @@ var viewer = new gxp.Viewer({
                         }
                     }
                 ]
-            }, 
-            "map"
+            }
         ]
     }],
     sources: {
