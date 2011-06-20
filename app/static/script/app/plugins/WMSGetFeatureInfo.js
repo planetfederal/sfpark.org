@@ -158,7 +158,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             }
             this.control = new OpenLayers.Control.WMSGetFeatureInfo({
                 autoActivate: true,
-                hover: true,
+                hover: false,
                 layers: layers,
                 infoFormat: 'application/vnd.ogc.gml',
                 maxFeatures: 1,
