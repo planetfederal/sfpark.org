@@ -21,7 +21,7 @@ app.rateTip = "<div class='legend-tip'><h4>Rates</h4><ul>" +
     "<li class='legend-rates-low'>$0 - $2.00/hr</li>" +
     "<li class='legend-rates-med'>$2.01 - $4.00/hr</li>" +
     "<li class='legend-rates-high'>&gt; $4.00/hr</li>" +
-    "<li class='legend-nodata'>No data</li>" +
+    "<li class='legend-nodata'>No data/restricted</li>" +
     "</ul></div>";
 
 app.refreshTipTemplate = new Ext.Template(
