@@ -51,7 +51,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
         BLOCKFACE_AVAILABILITY: {
             pricing: new Ext.XTemplate(
                 '<h4>{values.attributes.STREET_NAME} ({values.attributes.ADDR_RANGE})<a class="popup-more">&nbsp;</a></h4>',
-                '<div class="fullDisplay"><a id="streetview">Street view</a></div>',
                 '<p>{values.attributes.RATE}</p>',
                 '<div class="fullDisplay"><h5>Rates</h5>',
                     '<table><tpl for="values.rates.RS">',
@@ -61,7 +60,6 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             ),
             availability: new Ext.XTemplate(
                 '<h4>{values.attributes.STREET_NAME} ({values.attributes.ADDR_RANGE})<a class="popup-more">&nbsp;</a></h4>',
-                '<div class="fullDisplay"><a id="streetview">Street view</a></div>',
                 '<p>{values.attributes.AVAIL_MSG}</p>',
                 '<div class="fullDisplay"><h5>Rates</h5>',
                     '<table><tpl for="values.rates.RS">',
