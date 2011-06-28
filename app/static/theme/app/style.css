@@ -165,11 +165,31 @@ li.legend-nodata {
 }
 
 /* popups */
+.popup-content th {
+    background: #5D5D5D;
+    color: #FFFFFF;
+}
+.popup-content td, th
+{
+    white-space: nowrap;
+    padding: 3px 3px 3px 3px;
+}
+.popup-content td {
+  background-color: #EFEFEF;
+  border: 1px solid #CCCCCC;
+}
+.popup-content table {
+    margin-bottom: 5px;
+    width: 100%;
+    border-collapse:collapse;
+    border: 1px solid #CCCCCC;
+}
 .popup-minimal .x-tool-close {
     display: none;
 }
 .popup-content {
     padding-left: 5px;
+    padding-right: 5px;
 }
 .popup-content h4 {
     white-space: nowrap;
@@ -183,13 +203,6 @@ li.legend-nodata {
 }
 .popup-content p {
     margin: 5px 0;
-}
-.popup-content table {
-    margin-bottom: 5px;
-}
-.popup-content td {
-    white-space: nowrap;
-    padding: 0 5px;
 }
 .popup-content td.rate-restriction {
     font-size: 10px;
