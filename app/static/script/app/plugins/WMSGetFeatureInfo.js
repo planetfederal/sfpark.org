@@ -111,27 +111,49 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             )
         }
     },
+
+    closePopup: function() {
+        if (this.popup && this.popup.expanded === false) {
+            this.popup.close();
+        }
+    },
+
+    displayFeature: function(featureType, xy) {
+        var attributes = this.feature.attributes;
+        var tpl = this.templates[featureType][this.target.mode];
+        var hours = Ext.decode(this.feature.attributes['OP_HRS']);
+        // TODO: have them always provide an array
+        if (hours && !(hours.OPHRS instanceof Array)) {
+            hours.OPHRS = [hours.OPHRS];
+        }
+        this.displayPopup(xy, tpl.applyTemplate({
+            attributes: attributes,
+            rates: Ext.decode(attributes['RATE_SCHED']),
+            hours: hours
+        }));
+    },
+
+    handleFeatureSelect: function(evt) {
+        if (evt.feature) {
+            this.feature = evt.feature;
+            var map = this.target.mapPanel.map;
+            var xy = map.getPixelFromLonLat(new OpenLayers.LonLat(
+                this.feature.geometry.x, this.feature.geometry.y));
+            xy.y -= 18;
+            var featureType = "OSP_AVAILABILITY";
+            this.displayFeature(featureType, xy);
+        } else {
+            this.closePopup();
+        }
+    },
     
     handleGetFeatureInfo: function(evt) {
         if (evt.features && evt.features.length > 0) {
             this.feature = evt.features[0];
-            var attributes = this.feature.attributes;
             var featureType = this.feature.gml.featureType;
-            var tpl = this.templates[featureType][this.target.mode];
-            var hours = Ext.decode(this.feature.attributes['OP_HRS']);
-            // TODO: have them always provide an array
-            if (hours && !(hours.OPHRS instanceof Array)) {
-                hours.OPHRS = [hours.OPHRS];
-            }
-            this.displayPopup(evt, tpl.applyTemplate({
-                attributes: attributes,
-                rates: Ext.decode(attributes['RATE_SCHED']),
-                hours: hours
-            }));
+            this.displayFeature(featureType, evt.xy);
         } else {
-            if (this.popup && this.popup.expanded === false) {
-                this.popup.close();
-            }
+            this.closePopup();
         }
     },
      
@@ -142,18 +164,29 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
 
         var updateInfo = function(evt) {
             var map = this.target.mapPanel.map;
+            var vectorLayers = this.target.mapPanel.layers.queryBy(function(x){
+                return (x.get("layer") instanceof OpenLayers.Layer.Vector);
+            });
             var queryableLayers = this.target.mapPanel.layers.queryBy(function(x){
                 return x.get("queryable");
             });
             var layers = [];
+            var vectors = [];
             queryableLayers.each(function(x){
                 layers.push(x.getLayer());
             });
+            vectorLayers.each(function(x) {
+                vectors.push(x.getLayer());
+            });
             layers.reverse();
-            if (this.control) {
-                this.control.deactivate();  // TODO: remove when http://trac.openlayers.org/ticket/2130 is closed
-                this.control.destroy();
-            }
+            this.selectControl = new OpenLayers.Control.SelectFeature(vectors[0], {
+                autoActivate: true
+            });
+            vectors[0].events.on({
+                "featureselected": this.handleFeatureSelect,
+                scope: this
+            }); 
+
             this.control = new OpenLayers.Control.WMSGetFeatureInfo({
                 autoActivate: true,
                 hover: false,
@@ -168,9 +201,9 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
                     scope: this
                 }
             });
-            map.addControl(this.control);
+            map.addControls([this.control, this.selectControl]);
         };
-        
+
         this.target.mapPanel.layers.on("add", updateInfo, this);
         
         return actions;
@@ -244,11 +277,10 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
     },
 
     /** private: method[displayPopup]
-     * :arg evt: the event object from a 
-     *     :class:`OpenLayers.Control.GetFeatureInfo` control
+     * :arg location: the location where to open up the popup
      * :arg text: ``String`` Body text.
      */
-    displayPopup: function(evt, text) {
+    displayPopup: function(location, text) {
         if (this.popup) {
             this.popup.close();
         }
@@ -267,7 +299,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             }],
             closable: true,
             unpinnable: false,
-            location: evt.xy,
+            location: location,
             map: this.target.mapPanel,
             listeners: {
                 close: function(popup) {
