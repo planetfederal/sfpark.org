@@ -10,6 +10,18 @@ OpenLayers.ImgPath = "externals/openlayers/img/";
 OpenLayers.ProxyHost = "proxy/?url=";
 OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
+app.hidePopup = function() {
+    for (var key in viewer.tools) {
+        var tool = viewer.tools[key];
+        if (tool.ptype == "app_wmsgetfeatureinfo") {
+            if (tool.popup) {
+                tool.popup.close();
+            }
+            break;
+        }
+    }
+};
+
 app.createStyle = function(property, images) {
     var rules = [];
     for (var key in images) {
@@ -143,6 +155,7 @@ var viewer = new gxp.Viewer({
                             height: 33,
                             handler: function() {
                                 viewer.mode = "availability";
+                                app.hidePopup();
                                 Ext.get('legend-body').dom.qtip = app.availabilityTip;
                                 Ext.get('legend-body').removeClass("pricing-legend");
                                 Ext.get('legend-body').addClass("availability-legend");
@@ -176,6 +189,7 @@ var viewer = new gxp.Viewer({
                             height: 33,
                             handler: function() {
                                 viewer.mode = "pricing";
+                                app.hidePopup();
                                 Ext.get('legend-body').dom.qtip = app.rateTip;
                                 Ext.get('legend-body').removeClass("availability-legend");
                                 Ext.get('legend-body').addClass("pricing-legend");
@@ -240,15 +254,7 @@ var viewer = new gxp.Viewer({
                                     layer.refresh();
                                 }
                             }
-                            for (var key in this.tools) {
-                                var tool = this.tools[key];
-                                if (tool.ptype == "app_wmsgetfeatureinfo") {
-                                    if (tool.popup) {
-                                        tool.popup.close();
-                                    }
-                                    break;
-                                }
-                            }
+                            app.hidePopup();
                             cmp.dynamicTip.destroy();
                             cmp.dynamicTip = new Ext.ToolTip({
                                 target: "refresh-btn",
