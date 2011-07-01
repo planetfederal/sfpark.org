@@ -10,6 +10,50 @@ OpenLayers.ImgPath = "externals/openlayers/img/";
 OpenLayers.ProxyHost = "proxy/?url=";
 OpenLayers.Layer.WMS.prototype.DEFAULT_PARAMS.transparent = true;
 
+app.createStyle = function(property, images) {
+    var rules = [];
+    for (var key in images) {
+        rules.push(new OpenLayers.Rule({
+            filter: new OpenLayers.Filter.Comparison({
+                type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                property: property,
+                value: key
+            }),
+            symbolizer: {
+                 externalGraphic: images[key]
+            }
+        }));
+    }
+    return new OpenLayers.Style(
+        {
+            graphicWidth: 36,
+            graphicHeight: 30,
+            graphicYOffset: -30,
+            graphicXOffset: -26
+        }, {
+            rules: rules
+        }
+    );
+};
+
+app.availabilityStyleMap = new OpenLayers.StyleMap(
+    app.createStyle("AVAIL_THRESHOLD", {
+        1: "theme/app/img/markers/p_darkblue_tiny.png",
+        2: "theme/app/img/markers/p_lightblue_tiny.png",
+        3: "theme/app/img/markers/p_red_tiny.png",
+        4: "theme/app/img/markers/p_grey_tiny.png"
+    })
+);
+
+app.ratesStyleMap = new OpenLayers.StyleMap(
+    app.createStyle("RATE_THRESHOLD", {
+        1: "theme/app/img/markers/p_darkgreen_tiny.png",
+        2: "theme/app/img/markers/p_midgreen_tiny.png",
+        3: "theme/app/img/markers/p_lightgreen_tiny.png",
+        4: "theme/app/img/markers/p_grey_tiny.png"
+    })
+);
+
 app.availabilityTip = "<div class='legend-tip'><h4>Availability</h4><ul>" +
     "<li class='legend-avail-low'>Low (&lt; 15%)</li>" +
     "<li class='legend-avail-med'>Medium (15 - 30%)</li>" +
@@ -109,9 +153,10 @@ var viewer = new gxp.Viewer({
                                         if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
                                             layer.mergeNewParams({"STYLES": "BLOCKFACE_AVAIL_THRESHOLD"});
                                         }
-                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
-                                            layer.mergeNewParams({"STYLES": "OSP_AVAIL_THRESHOLD"});
-                                        }
+                                    }
+                                    if (layer instanceof OpenLayers.Layer.Vector) {
+                                        layer.styleMap = app.availabilityStyleMap;
+                                        layer.redraw();
                                     }
                                 }
                             }
@@ -141,9 +186,10 @@ var viewer = new gxp.Viewer({
                                         if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
                                             layer.mergeNewParams({"STYLES": "BLOCKFACE_RATE_THRESHOLD"});
                                         }
-                                        if (layer.params.LAYERS === "sfpark:OSP_AVAILABILITY") {
-                                            layer.mergeNewParams({"STYLES": "OSP_RATE_THRESHOLD"});
-                                        }
+                                    }
+                                    if (layer instanceof OpenLayers.Layer.Vector) {
+                                        layer.styleMap = app.ratesStyleMap;
+                                        layer.redraw();
                                     }
                                 }
                             }
@@ -315,58 +361,7 @@ var viewer = new gxp.Viewer({
                         featureType: "OSP_AVAILABILITY",
                         featureNS: "sfpark"
                     }),
-                    styleMap: new OpenLayers.StyleMap(
-                        new OpenLayers.Style(
-                            {
-                                graphicWidth: 36,
-                                graphicHeight: 30,
-                                graphicYOffset: -30,
-                                graphicXOffset: -26
-                            }, {
-                            rules: [
-                                new OpenLayers.Rule({
-                                    filter: new OpenLayers.Filter.Comparison({
-                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                                        property: "AVAIL_THRESHOLD",
-                                        value: 1
-                                    }),
-                                    symbolizer: {
-                                       externalGraphic: "theme/app/img/markers/p_darkblue_tiny.png"
-                                    }
-                                }),
-                                new OpenLayers.Rule({
-                                    filter: new OpenLayers.Filter.Comparison({
-                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                                        property: "AVAIL_THRESHOLD",
-                                        value: 2
-                                    }),
-                                    symbolizer: {
-                                       externalGraphic: "theme/app/img/markers/p_lightblue_tiny.png"
-                                    }
-                                }),
-                                new OpenLayers.Rule({
-                                    filter: new OpenLayers.Filter.Comparison({
-                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                                        property: "AVAIL_THRESHOLD",
-                                        value: 3
-                                    }),
-                                    symbolizer: {
-                                       externalGraphic: "theme/app/img/markers/p_red_tiny.png"
-                                    }
-                                }),
-                                new OpenLayers.Rule({
-                                    filter: new OpenLayers.Filter.Comparison({
-                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
-                                        property: "AVAIL_THRESHOLD",
-                                        value: 4
-                                    }),
-                                    symbolizer: {
-                                       externalGraphic: "theme/app/img/markers/p_grey_tiny.png"
-                                    }
-                                })
-                            ]
-                        })
-                    )
+                    styleMap: app.availabilityStyleMap
                 }
             ]
         }],
