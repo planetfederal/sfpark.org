@@ -236,6 +236,9 @@ var viewer = new gxp.Viewer({
         },
         google: {
             ptype: "gxp_googlesource"
+        },
+        vector: {
+            ptype: "gxp_olsource"
         }
     },
     tools: [
@@ -299,10 +302,73 @@ var viewer = new gxp.Viewer({
             styles: "BLOCKFACE_AVAIL_THRESHOLD",
             visibility: true
         }, {
-            source: "local",
-            name: "sfpark:OSP_AVAILABILITY",
-            styles: "OSP_AVAIL_THRESHOLD",
-            visibility: true
+            source: "vector",
+            type: "OpenLayers.Layer.Vector",
+            args: [
+                "Parking garages", {
+                    strategies: [new OpenLayers.Strategy.BBOX()],
+                    protocol: new OpenLayers.Protocol.WFS({
+                        url:  "/geoserver/ows",
+                        version: "1.1.0",
+                        geometryName: "MAIN_ENTRANCE_GEOM",
+                        srsName: "EPSG:900913",
+                        featureType: "OSP_AVAILABILITY",
+                        featureNS: "sfpark"
+                    }),
+                    styleMap: new OpenLayers.StyleMap(
+                        new OpenLayers.Style(
+                            {
+                                graphicWidth: 36,
+                                graphicHeight: 30,
+                                graphicYOffset: -30,
+                                graphicXOffset: -26
+                            }, {
+                            rules: [
+                                new OpenLayers.Rule({
+                                    filter: new OpenLayers.Filter.Comparison({
+                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                                        property: "AVAIL_THRESHOLD",
+                                        value: 1
+                                    }),
+                                    symbolizer: {
+                                       externalGraphic: "theme/app/img/markers/p_darkblue_tiny.png"
+                                    }
+                                }),
+                                new OpenLayers.Rule({
+                                    filter: new OpenLayers.Filter.Comparison({
+                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                                        property: "AVAIL_THRESHOLD",
+                                        value: 2
+                                    }),
+                                    symbolizer: {
+                                       externalGraphic: "theme/app/img/markers/p_lightblue_tiny.png"
+                                    }
+                                }),
+                                new OpenLayers.Rule({
+                                    filter: new OpenLayers.Filter.Comparison({
+                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                                        property: "AVAIL_THRESHOLD",
+                                        value: 3
+                                    }),
+                                    symbolizer: {
+                                       externalGraphic: "theme/app/img/markers/p_red_tiny.png"
+                                    }
+                                }),
+                                new OpenLayers.Rule({
+                                    filter: new OpenLayers.Filter.Comparison({
+                                        type: OpenLayers.Filter.Comparison.EQUAL_TO,
+                                        property: "AVAIL_THRESHOLD",
+                                        value: 4
+                                    }),
+                                    symbolizer: {
+                                       externalGraphic: "theme/app/img/markers/p_grey_tiny.png"
+                                    }
+                                })
+                            ]
+                        })
+                    )
+                }
+            ]
         }],
         items: [{
             xtype: "gx_zoomslider",
