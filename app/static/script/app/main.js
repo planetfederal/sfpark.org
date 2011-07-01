@@ -236,6 +236,9 @@ var viewer = new gxp.Viewer({
                                 if (layer instanceof OpenLayers.Layer.WMS) {
                                     layer.redraw(true);
                                 }
+                                if (layer instanceof OpenLayers.Layer.Vector) {
+                                    layer.refresh();
+                                }
                             }
                             for (var key in this.tools) {
                                 var tool = this.tools[key];
@@ -352,7 +355,7 @@ var viewer = new gxp.Viewer({
             type: "OpenLayers.Layer.Vector",
             args: [
                 "Parking garages", {
-                    strategies: [new OpenLayers.Strategy.BBOX()],
+                    strategies: [new OpenLayers.Strategy.Fixed()],
                     protocol: new OpenLayers.Protocol.WFS({
                         url:  "/geoserver/ows",
                         version: "1.1.0",
