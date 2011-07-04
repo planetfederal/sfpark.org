@@ -241,8 +241,8 @@ var viewer = new gxp.Viewer({
                         xtype: "button",
                         cls: "refresh-btn",
                         id: "refresh-btn",
-                        width: 20,
-                        height: 22,
+                        width: 31,
+                        height: 29,
                         handler: function(cmp) {
                             var map = viewer.mapPanel.map;
                             for (var i=0,ii=map.layers.length;i<ii;++i) {

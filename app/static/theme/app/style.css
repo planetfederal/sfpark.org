@@ -103,12 +103,6 @@ body {
 .refresh-btn {
     background: url(img/button_refresh.png) no-repeat 0px 0px;
 }
-.refresh-btn button {
-    width: 20px;
-}
-.x-btn-over.refresh-btn {
-    background-position: 0px -28px;
-}
 .refresh-btn .x-btn-tl, 
 .refresh-btn .x-btn-tr, 
 .refresh-btn .x-btn-tc, 
