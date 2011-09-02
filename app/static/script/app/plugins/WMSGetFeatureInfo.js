@@ -236,7 +236,10 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
 
     showStreetView: function() {
         this.streetview = true;
-        var geom = this.feature.geometry.getCentroid();
+        var geom = this.feature.geometry.getCentroid().transform(
+            this.target.mapPanel.map.getProjectionObject(),
+            new OpenLayers.Projection("EPSG:4326")
+        );
         this.popup.items.clear();
         this.popup.setSize(800, 275);
         this.popup.add({
