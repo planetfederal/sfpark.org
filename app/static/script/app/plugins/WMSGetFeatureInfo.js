@@ -52,7 +52,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             pricing: new Ext.XTemplate(
                 '<h4>{values.attributes.STREET_NAME} ({values.attributes.ADDR_RANGE})<a class="popup-more">&nbsp;</a></h4>',
                 '<p>{values.attributes.RATE}</p>',
-                '<div class="fullDisplay"><table class><th>Rates</th>',
+                '<div class="fullDisplay"><table><th>Rates</th>',
                     '<tpl for="values.rates.RS">',
                         '<tr><td>{TIME}: <br/>{RATE}</td></tr>',
                     '</tpl></table>',
@@ -61,7 +61,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             availability: new Ext.XTemplate(
                 '<h4>{values.attributes.STREET_NAME} ({values.attributes.ADDR_RANGE})<a class="popup-more">&nbsp;</a></h4>',
                 '<p>{values.attributes.AVAIL_MSG}</p>',
-                '<div class="fullDisplay"><table class><th>Rates</th>',
+                '<div class="fullDisplay"><table><th>Rates</th>',
                     '<tpl for="values.rates.RS">',
                         '<tr><td>{TIME}: <br/>{RATE}</td></tr>',
                     '</tpl></table>',
