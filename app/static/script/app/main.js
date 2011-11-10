@@ -304,7 +304,7 @@ var viewer = new gxp.Viewer({
             ptype: "app_pilotareas",
             url: "/geoserver/ows",
             featureType: "NEIGHBORHOODS",
-            featureNS: "sfpark",
+            featureNS: "http://sfpark.org",
             displayField: "NEIGHBORHOOD_NAME",
             outputTarget: "geocoder",
             outputConfig: {
