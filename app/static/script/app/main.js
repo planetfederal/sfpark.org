@@ -368,7 +368,7 @@ var viewer = new gxp.Viewer({
                         geometryName: "MAIN_ENTRANCE_GEOM",
                         srsName: "EPSG:900913",
                         featureType: "OSP_AVAILABILITY",
-                        featureNS: "sfpark"
+                        featureNS: "http://sfpark.org"
                     }),
                     styleMap: app.availabilityStyleMap
                 }
