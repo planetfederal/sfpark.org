@@ -36,6 +36,20 @@
             .panel>.content {
                 overflow: auto;
             }
+            div#top-left-inside-corner {
+                position: absolute;
+                z-index: 1000;
+                width: 940px;
+                height: 8px;
+                background: url(theme/app/img/top-left-inside-corner.png) left top no-repeat;
+            }
+            div#top-right-inside-corner {
+                position: absolute;
+                z-index: 1000;
+                width: 940px;
+                height: 8px;
+                background: url(theme/app/img/top-right-inside-corner.png) right top no-repeat;
+            }
         </style>
 
         <!-- app resources -->
@@ -57,7 +71,10 @@
                         <div class="navi"></div> 
                         <div id="items">
                             <div class="panel">
-                                <div id="mapportal"></div>
+                                <div id="mapportal">
+                                    <div id="top-left-inside-corner">&nbsp;</div>
+                                    <div id="top-right-inside-corner">&nbsp;</div>
+                                </div>
                             </div>
                         </div>
                     </div>
