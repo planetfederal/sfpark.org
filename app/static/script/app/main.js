@@ -41,7 +41,8 @@ app.createStyle = function(property, images) {
             graphicWidth: 36,
             graphicHeight: 30,
             graphicYOffset: -30,
-            graphicXOffset: -26
+            graphicXOffset: -26,
+            cursor: 'pointer'
         }, {
             rules: rules
         }
