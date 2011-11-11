@@ -36,19 +36,33 @@
             .panel>.content {
                 overflow: auto;
             }
-            div#top-left-inside-corner {
+            div.inside-corner {
                 position: absolute;
                 z-index: 1000;
                 width: 940px;
                 height: 8px;
+            }
+            div#top-left-inside-corner {
                 background: url(theme/app/img/top-left-inside-corner.png) left top no-repeat;
             }
             div#top-right-inside-corner {
-                position: absolute;
-                z-index: 1000;
-                width: 940px;
-                height: 8px;
                 background: url(theme/app/img/top-right-inside-corner.png) right top no-repeat;
+            }
+            div#bottom-left-inside-corner {
+                bottom: 0;
+                background: url(theme/app/img/bottom-left-inside-corner.png) left bottom no-repeat;
+            }
+            div#bottom-right-inside-corner {
+                bottom: 0;
+                background: url(theme/app/img/bottom-right-inside-corner.png) right bottom no-repeat;
+            }
+            #items .panel {
+                height: 494px !important;
+            }
+            #items .panel, .search {
+                border-radius: 0px !important; 
+                -moz-border-radius: 0px !important; 
+                -webkit-border-radius: 0px !important;
             }
         </style>
 
@@ -72,8 +86,10 @@
                         <div id="items">
                             <div class="panel">
                                 <div id="mapportal">
-                                    <div id="top-left-inside-corner">&nbsp;</div>
-                                    <div id="top-right-inside-corner">&nbsp;</div>
+                                    <div id="top-left-inside-corner" class="inside-corner">&nbsp;</div>
+                                    <div id="top-right-inside-corner" class="inside-corner">&nbsp;</div>
+                                    <div id="bottom-left-inside-corner" class="inside-corner">&nbsp;</div>
+                                    <div id="bottom-right-inside-corner" class="inside-corner">&nbsp;</div>
                                 </div>
                             </div>
                         </div>
