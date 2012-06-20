@@ -173,7 +173,9 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             var layers = [];
             var vectors = [];
             queryableLayers.each(function(x){
-                layers.push(x.getLayer());
+                var layer = x.getLayer();
+                layer.url = viewer.sources.local.url;
+                layers.push(layer);
             });
             vectorLayers.each(function(x) {
                 vectors.push(x.getLayer());
@@ -185,7 +187,7 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             vectors[0].events.on({
                 "featureselected": this.handleFeatureSelect,
                 scope: this
-            }); 
+            });
 
             this.control = new OpenLayers.Control.WMSGetFeatureInfo({
                 autoActivate: true,
