@@ -174,9 +174,9 @@ app.plugins.WMSGetFeatureInfo = Ext.extend(gxp.plugins.Tool, {
             var vectors = [];
             queryableLayers.each(function(x){
                 var layer = x.getLayer();
-                layer.url = viewer.sources.local.url;
+                layer.url = this.target.sources.local.url;
                 layers.push(layer);
-            });
+            }, this);
             vectorLayers.each(function(x) {
                 vectors.push(x.getLayer());
             });
