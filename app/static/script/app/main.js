@@ -67,12 +67,24 @@ app.ratesStyleMap = new OpenLayers.StyleMap(
     })
 );
 
-app.availabilityTip = "<div class='legend-tip'><h4>Availability</h4><ul>" +
+app.availabilityTip = "<div class='legend-tip'><h4>Availability</h4>" +
+    "<div class='legend-subcontainer'>" +
+    "<ul><span class='legend-subheader'>STREET</span>" +
     "<li class='legend-avail-low'>Low (&lt; 15%)</li>" +
     "<li class='legend-avail-med'>Medium (15 - 30%)</li>" +
     "<li class='legend-avail-high'>High (&gt; 30%)</li>" +
     "<li class='legend-nodata'>No data</li>" +
-    "</ul></div>";
+    "</ul>" +
+    "</div>" +
+    "<div class='legend-subcontainer'>" +
+    "<ul><span class='legend-subheader'>GARAGE</span>" +
+    "<li class='legend-avail-low'>Low (&lt; 10%)</li>" +
+    "<li class='legend-avail-med'>Medium (10 - 30%)</li>" +
+    "<li class='legend-avail-high'>High (&gt; 30%)</li>" +
+    "<li class='legend-nodata'>No data</li>" +
+    "</ul>" +
+    "</div>" +
+    "</div>";
 
 app.rateTip = "<div class='legend-tip'><h4>Rates</h4><ul>" +
     "<li class='legend-rates-low'>$0 - $2.00/hr</li>" +
