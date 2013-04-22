@@ -147,14 +147,21 @@ body {
     padding: 4px 0 0 20px;
     font-size: 13px;
 }
-li.legend-avail-low {
-    background: url(img/bullet_avail_low.png) no-repeat 2px 5px;
+div.legend-avail-low {
+    height: 13px;
+    background: url(img/bullet_avail_low.png) no-repeat;
 }
-li.legend-avail-med {
-    background: url(img/bullet_avail_med.png) no-repeat 2px 5px;
+div.legend-avail-med {
+    height: 13px;
+    background: url(img/bullet_avail_med.png) no-repeat;
 }
-li.legend-avail-high {
-    background: url(img/bullet_avail_high.png) no-repeat 2px 5px;
+div.legend-avail-high {
+    height: 13px;
+    background: url(img/bullet_avail_high.png) no-repeat;
+}
+div.legend-nodata {
+    height: 13px;
+    background: url(img/bullet_nodata.png) no-repeat;
 }
 li.legend-rates-low {
     background: url(img/bullet_rates_low.png) no-repeat 2px 5px;
@@ -259,9 +266,17 @@ a.popup-more:hover {
     top: -2px;
     background-image: url("img/anchor.png");
 }
-.legend-subcontainer {
-    display: inline-block;
+.legend-col1, .legend-col2 {
+    font-size: 13px;
 }
 .legend-subheader {
     font-weight: bold;
+}
+.legend-col1 {
+    display: inline-block; 
+    width: 25px;
+}
+.legend-col2 {
+    display: inline-block;
+    width: 100px;
 }
