@@ -51,8 +51,8 @@ app.createStyle = function(property, images) {
 
 app.availabilityStyleMap = new OpenLayers.StyleMap(
     app.createStyle("AVAIL_THRESHOLD", {
-        1: "theme/app/img/markers/p_darkblue_tiny.png",
-        2: "theme/app/img/markers/p_lightblue_tiny.png",
+        1: "theme/app/img/markers/p_lightblue_tiny.png",
+        2: "theme/app/img/markers/p_darkblue_tiny.png",
         3: "theme/app/img/markers/p_red_tiny.png",
         4: "theme/app/img/markers/p_grey_tiny.png"
     })
