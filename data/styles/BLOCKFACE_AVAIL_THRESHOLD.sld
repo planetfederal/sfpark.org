@@ -16,7 +16,7 @@
                     </ogc:Filter>
                     <sld:LineSymbolizer>
                         <sld:Stroke>
-                            <sld:CssParameter name="stroke">#006490</sld:CssParameter>
+                            <sld:CssParameter name="stroke">#11CDFF</sld:CssParameter>
                             <sld:CssParameter name="stroke-opacity">0.8</sld:CssParameter>
                             <sld:CssParameter name="stroke-width">5</sld:CssParameter>
                             <sld:CssParameter name="stroke-linecap">round</sld:CssParameter>
@@ -34,7 +34,7 @@
                     </ogc:Filter>
                     <sld:LineSymbolizer>
                         <sld:Stroke>
-                            <sld:CssParameter name="stroke">#11CDFF</sld:CssParameter>
+                            <sld:CssParameter name="stroke">#006490</sld:CssParameter>
                             <sld:CssParameter name="stroke-opacity">0.8</sld:CssParameter>
                             <sld:CssParameter name="stroke-width">5</sld:CssParameter>
                             <sld:CssParameter name="stroke-linecap">round</sld:CssParameter>
