@@ -95,7 +95,7 @@ app.availabilityTip = "<div class='legend-tip'><h4>Availability</h4>" +
   "</div>" +
   "</div>";
 
-app.rateTip = "<div class='legend-tip'><h4>Rates</h4><ul>" +
+app.rateTip = "<div class='legend-tip'><h4>Price</h4><ul>" +
     "<li class='legend-rates-low'>$0 - $2.00/hr</li>" +
     "<li class='legend-rates-med'>$2.01 - $4.00/hr</li>" +
     "<li class='legend-rates-high'>&gt; $4.00/hr</li>" +
@@ -104,7 +104,7 @@ app.rateTip = "<div class='legend-tip'><h4>Rates</h4><ul>" +
 
 app.refreshTipTemplate = new Ext.Template(
     "<div class='legend-tip'><h4>Refresh</h4>",
-    "Rates and availability<br>as of {time}."
+    "Price and availability<br>as of {time}."
 );
 
 app.getFormattedTime = function() {
