@@ -119,7 +119,7 @@ app.getFormattedTime = function() {
 
 var viewer = new gxp.Viewer({
     
-    mode: "availability",
+    mode: "pricing",
     portalConfig: {
         renderTo: "mapportal",
         border: false, 
@@ -162,7 +162,7 @@ var viewer = new gxp.Viewer({
                             enableToggle: true,
                             allowDepress: false,
                             toggleGroup: "style",
-                            pressed: true,
+                            pressed: false,
                             cls: "availability-btn",
                             width: 99,
                             height: 33,
@@ -197,6 +197,7 @@ var viewer = new gxp.Viewer({
                             enableToggle: true,
                             allowDepress: false,
                             toggleGroup: "style",
+                            pressed: true,
                             cls: "pricing-btn",
                             width: 73,
                             height: 33,
@@ -240,8 +241,8 @@ var viewer = new gxp.Viewer({
                             bodyCfg: {
                                 tag: "div",
                                 id: "legend-body",
-                                qtip: app.availabilityTip,
-                                cls: "availability-legend",
+                                qtip: app.rateTip,
+                                cls: "pricing-legend",
                                 html: "&nbsp;"
                             }
                         }, {
@@ -367,7 +368,7 @@ var viewer = new gxp.Viewer({
         }, {
             source: "local",
             name: "sfpark:BLOCKFACE_AVAILABILITY",
-            visibility: false,
+            visibility: true,
             styles: "BLOCKFACE_RATE_THRESHOLD"
         }, {
             source: "vector",
@@ -383,7 +384,7 @@ var viewer = new gxp.Viewer({
                         featureType: "OSP_AVAILABILITY",
                         featureNS: "http://sfpark.org"
                     }),
-                    styleMap: app.availabilityStyleMap
+                    styleMap: app.ratesStyleMap
                 }
             ]
         }],
