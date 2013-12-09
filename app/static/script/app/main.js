@@ -69,28 +69,19 @@ app.ratesStyleMap = new OpenLayers.StyleMap(
 
 app.availabilityTip = "<div class='legend-tip'><h4>Availability</h4>" +
   "<div>" +
-  "  <div class='legend-col1'></div>" +
-  "  <div class='legend-col2 legend-subheader'>Street</div>" +
-  "  <div class='legend-col2 legend-subheader'>Garage</div>" +
-  "</div>" +
-  "<div>" +
   "  <div class='legend-col1 legend-avail-low'></div>" +
-  "  <div class='legend-col2'>&lt; 15%</div>" +
   "  <div class='legend-col2'>&lt; 10%</div>" +
   "</div>" +
   "<div>" +
   "  <div class='legend-col1 legend-avail-med'></div>" +
-  "  <div class='legend-col2'>15 - 30%</div>" +
   "  <div class='legend-col2'>10 - 30%</div>" +
   "</div>" +
   "<div>" +
   "  <div class='legend-col1 legend-avail-high'></div>" +
-  "  <div class='legend-col2'>&gt; 30%</div>" +
   "  <div class='legend-col2'>&gt; 30%</div>" + 
   "</div>" +
   "<div>" +
   "  <div class='legend-col1 legend-nodata'></div>" +
-  "  <div class='legend-col2'>No data</div>" +
   "  <div class='legend-col2'>No data</div>" +
   "</div>" +
   "</div>";
@@ -186,7 +177,7 @@ var viewer = new gxp.Viewer({
                                     var layer = map.layers[i];
                                     if (layer instanceof OpenLayers.Layer.WMS) {
                                         if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                            layer.mergeNewParams({"STYLES": "BLOCKFACE_AVAIL_THRESHOLD"});
+                                            layer.setVisibility(false);
                                         }
                                     }
                                     if (layer instanceof OpenLayers.Layer.Vector) {
@@ -220,7 +211,7 @@ var viewer = new gxp.Viewer({
                                     var layer = map.layers[i];
                                     if (layer instanceof OpenLayers.Layer.WMS) {
                                         if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                            layer.mergeNewParams({"STYLES": "BLOCKFACE_RATE_THRESHOLD"});
+                                            layer.setVisibility(true);
                                         }
                                     }
                                     if (layer instanceof OpenLayers.Layer.Vector) {
@@ -376,8 +367,8 @@ var viewer = new gxp.Viewer({
         }, {
             source: "local",
             name: "sfpark:BLOCKFACE_AVAILABILITY",
-            styles: "BLOCKFACE_AVAIL_THRESHOLD",
-            visibility: true
+            visibility: false,
+            styles: "BLOCKFACE_RATE_THRESHOLD"
         }, {
             source: "vector",
             type: "OpenLayers.Layer.Vector",
