@@ -162,41 +162,6 @@ var viewer = new gxp.Viewer({
                             enableToggle: true,
                             allowDepress: false,
                             toggleGroup: "style",
-                            pressed: false,
-                            cls: "availability-btn",
-                            width: 99,
-                            height: 33,
-                            handler: function() {
-                                viewer.mode = "availability";
-                                app.hidePopup();
-                                Ext.get('legend-body').dom.qtip = app.availabilityTip;
-                                Ext.get('legend-body').removeClass("pricing-legend");
-                                Ext.get('legend-body').addClass("availability-legend");
-                                var map = viewer.mapPanel.map;
-                                for (var i=0,ii=map.layers.length;i<ii;++i) {
-                                    var layer = map.layers[i];
-                                    if (layer instanceof OpenLayers.Layer.WMS) {
-                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
-                                            layer.setVisibility(false);
-                                        }
-                                    }
-                                    if (layer instanceof OpenLayers.Layer.Vector) {
-                                        layer.styleMap = app.availabilityStyleMap;
-                                        layer.redraw();
-                                    }
-                                }
-                            }
-                        }]
-                    }, {
-                        xtype: "container",
-                        style: {
-                            padding: "0 10px 0 5px"
-                        },
-                        items: [{
-                            xtype: "button",
-                            enableToggle: true,
-                            allowDepress: false,
-                            toggleGroup: "style",
                             pressed: true,
                             cls: "pricing-btn",
                             width: 73,
@@ -217,6 +182,41 @@ var viewer = new gxp.Viewer({
                                     }
                                     if (layer instanceof OpenLayers.Layer.Vector) {
                                         layer.styleMap = app.ratesStyleMap;
+                                        layer.redraw();
+                                    }
+                                }
+                            }
+                        }]
+                    }, {
+                        xtype: "container",
+                        style: {
+                            padding: "0 10px 0 5px"
+                        },
+                        items: [{
+                            xtype: "button",
+                            enableToggle: true,
+                            allowDepress: false,
+                            toggleGroup: "style",
+                            pressed: false,
+                            cls: "availability-btn",
+                            width: 99,
+                            height: 33,
+                            handler: function() {
+                                viewer.mode = "availability";
+                                app.hidePopup();
+                                Ext.get('legend-body').dom.qtip = app.availabilityTip;
+                                Ext.get('legend-body').removeClass("pricing-legend");
+                                Ext.get('legend-body').addClass("availability-legend");
+                                var map = viewer.mapPanel.map;
+                                for (var i=0,ii=map.layers.length;i<ii;++i) {
+                                    var layer = map.layers[i];
+                                    if (layer instanceof OpenLayers.Layer.WMS) {
+                                        if (layer.params.LAYERS === "sfpark:BLOCKFACE_AVAILABILITY") {
+                                            layer.setVisibility(false);
+                                        }
+                                    }
+                                    if (layer instanceof OpenLayers.Layer.Vector) {
+                                        layer.styleMap = app.availabilityStyleMap;
                                         layer.redraw();
                                     }
                                 }
