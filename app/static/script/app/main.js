@@ -86,6 +86,10 @@ app.refreshTipTemplate = new Ext.Template(
     "Price and availability<br>as of {time}."
 );
 
+// the garage to not display in availability mode
+// this corresponds to California and Steiner Lot
+app.filterGarage = "OSP_AVAILABILITY.902";
+
 app.getFormattedTime = function() {
     var date = new Date();
     var hours = date.getHours();
@@ -170,6 +174,13 @@ var viewer = new gxp.Viewer({
                                     }
                                     if (layer instanceof OpenLayers.Layer.Vector) {
                                         layer.styleMap = app.ratesStyleMap;
+                                        for (var j = 0, jj = layer.features.length; j<jj; ++j) {
+                                            var feature = layer.features[j];
+                                            if (feature.fid === app.filterGarage) {
+                                                delete feature.style;
+                                                break;
+                                            }
+                                        }
                                         layer.redraw();
                                     }
                                 }
@@ -205,6 +216,13 @@ var viewer = new gxp.Viewer({
                                     }
                                     if (layer instanceof OpenLayers.Layer.Vector) {
                                         layer.styleMap = app.availabilityStyleMap;
+                                        for (var j = 0, jj = layer.features.length; j<jj; ++j) {
+                                            var feature = layer.features[j];
+                                            if (feature.fid === app.filterGarage) {
+                                                feature.style = {display: "none"};
+                                                break;
+                                            }
+                                        }
                                         layer.redraw();
                                     }
                                 }
