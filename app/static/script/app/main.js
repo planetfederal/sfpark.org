@@ -88,7 +88,7 @@ app.refreshTipTemplate = new Ext.Template(
 
 // the garage to not display in availability mode
 // this corresponds to California and Steiner Lot
-app.filterGarage = "OSP_AVAILABILITY.902";
+app.filterGarage = {field: "OSP_ID", value: "902"};
 
 app.getFormattedTime = function() {
     var date = new Date();
@@ -176,7 +176,7 @@ var viewer = new gxp.Viewer({
                                         layer.styleMap = app.ratesStyleMap;
                                         for (var j = 0, jj = layer.features.length; j<jj; ++j) {
                                             var feature = layer.features[j];
-                                            if (feature.fid === app.filterGarage) {
+                                            if (feature.attributes[app.filterGarage.field] === app.filterGarage.value) {
                                                 delete feature.style;
                                                 break;
                                             }
@@ -218,7 +218,7 @@ var viewer = new gxp.Viewer({
                                         layer.styleMap = app.availabilityStyleMap;
                                         for (var j = 0, jj = layer.features.length; j<jj; ++j) {
                                             var feature = layer.features[j];
-                                            if (feature.fid === app.filterGarage) {
+                                            if (feature.attributes[app.filterGarage.field] === app.filterGarage.value) {
                                                 feature.style = {display: "none"};
                                                 break;
                                             }
